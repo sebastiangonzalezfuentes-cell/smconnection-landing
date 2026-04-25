@@ -33,24 +33,50 @@ a{text-decoration:none;color:inherit}
 #nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--w);border-bottom:1px solid var(--border);transition:box-shadow .3s,transform .3s,top .3s,margin .3s,border-radius .3s,border-color .3s}
 #nav.scrolled{box-shadow:0 8px 32px rgba(0,0,0,.12);top:8px;left:50%;right:auto;transform:translateX(-50%);width:calc(100% - 48px);max-width:1200px;border-radius:16px;border-color:transparent}
 #nav.scrolled .nav-top{padding:0 20px}
+@media(min-width:1440px){
+  #nav.scrolled{max-width:960px}
+}
+@media(max-width:768px){
+  #nav.scrolled{top:0;left:0;right:0;transform:none;width:100%;border-radius:0}
+}
 
-.nav-top{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:0}
+.nav-top{position:relative;max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:0}
 .nav-logo{font-size:19px;font-weight:800;color:var(--text);margin-right:32px;letter-spacing:-.5px;flex-shrink:0}
 .nav-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 
-.nav-menu{display:flex;align-items:center;gap:4px;flex:1}
+/* Centrado absoluto real — independiente del ancho del logo y del CTA */
+.nav-menu{position:absolute;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:4px}
 .nav-item{position:relative}
 .nav-link{display:flex;align-items:center;gap:5px;padding:8px 12px;font-size:14px;font-weight:500;color:var(--mid);border-radius:8px;cursor:pointer;transition:background .15s,color .15s;user-select:none;border:none;background:none}
 .nav-link:hover{background:var(--off);color:var(--text)}
 .nav-link svg{transition:transform .25s;flex-shrink:0}
 .nav-item.active .nav-link svg{transform:rotate(180deg)}
-.nav-link-plain{padding:8px 12px;font-size:14px;font-weight:500;color:var(--mid);border-radius:8px;transition:background .15s,color .15s}
+/* Active state cuando dropdown está abierto */
+.nav-item.active>.nav-link{color:var(--blue);background:var(--blue-soft)}
+.nav-item.active>.nav-link svg path{stroke:var(--blue)}
+.nav-link-plain{padding:8px 12px;font-size:14px;font-weight:500;color:var(--mid);border-radius:8px;transition:background .15s,color .15s;display:inline-block}
 .nav-link-plain:hover{background:var(--off);color:var(--text)}
+/* Active section indicator */
+.nav-link-plain.section-active,.nav-link-plain.section-active:hover{color:var(--blue)}
+
+/* Focus visible — accesibilidad WCAG 2.1 AA */
+.nav-link:focus-visible,.nav-link-plain:focus-visible,.nav-cta:focus-visible{
+  outline:2px solid var(--blue);
+  outline-offset:3px;
+  border-radius:8px;
+}
 
 /* Dropdown */
 .nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-8px);background:var(--w);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:0 16px 48px rgba(0,0,0,.13);padding:20px;width:560px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:300}
 .nav-dropdown.sm{width:280px}
 .nav-item.active .nav-dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+/* Hover intent desktop — el dropdown responde a hover con CSS, JS añade delay */
+@media(hover:hover) and (pointer:fine){
+  .nav-item:hover>.nav-dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+  .nav-item:hover>.nav-link{color:var(--blue);background:var(--blue-soft)}
+  .nav-item:hover>.nav-link svg path{stroke:var(--blue)}
+  .nav-item:hover>.nav-link svg{transform:rotate(180deg)}
+}
 .dd-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
 .dd-grid.col1{grid-template-columns:1fr}
 .dd-item{display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:var(--r);transition:background .15s;cursor:pointer}
@@ -63,8 +89,11 @@ a{text-decoration:none;color:inherit}
 .nav-right{display:flex;align-items:center;gap:10px;margin-left:auto}
 .nav-login{font-size:14px;font-weight:500;color:var(--mid);padding:8px 14px;border-radius:8px;transition:background .15s,color .15s}
 .nav-login:hover{background:var(--off);color:var(--text)}
-.nav-cta{background:var(--blue);color:#fff;font-size:14px;font-weight:600;padding:9px 18px;border-radius:980px;transition:background .2s,transform .15s,box-shadow .2s;white-space:nowrap}
+.nav-cta{background:var(--blue);color:#fff;font-size:14px;font-weight:600;padding:9px 18px;border-radius:980px;transition:background .2s,transform .15s,box-shadow .2s;white-space:nowrap;overflow:hidden;position:relative}
 .nav-cta:hover{background:var(--blue-h);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,87,255,.3)}
+/* Shimmer sutil cada 8s — llama la atención sin distraer */
+.nav-cta::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.25),transparent);animation:shimmer 8s ease-in-out 1.5s infinite;pointer-events:none}
+@keyframes shimmer{0%,85%,100%{left:-100%}90%{left:150%}}
 
 /* Mobile nav */
 .nav-ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;margin-left:auto}
@@ -393,13 +422,11 @@ footer{background:#111827;padding:52px 0 28px}
         </div>
       </div>
 
-      <a href="#precios" class="nav-link-plain">Planes</a>
-      <a href="#faq" class="nav-link-plain">FAQ</a>
-      <a href="https://wa.me/56912345678" class="nav-link-plain">💬 WhatsApp</a>
+      <a href="#precios" class="nav-link-plain" data-section="precios">Planes</a>
+      <a href="#faq" class="nav-link-plain" data-section="faq">FAQ</a>
     </div>
 
     <div class="nav-right">
-      <a href="mailto:hola@smconnection.cl" class="nav-login">Contacto</a>
       <a href="#contacto" class="nav-cta">Haz crecer tu negocio</a>
     </div>
 
@@ -416,7 +443,6 @@ footer{background:#111827;padding:52px 0 28px}
     <a href="#productos" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#EEF3FF">🤖</div>Motor de IA</a>
     <a href="#productos" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#F3F0FF">⚡</div>Automatización</a>
     <a href="#integraciones" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#DCFCE7">🔗</div>Integraciones</a>
-    <a href="#productos" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#E0F7FA">💬</div>WhatsApp Business</a>
   </div>
   <div class="mob-section">
     <div class="mob-section-title">Productos</div>
@@ -822,12 +848,25 @@ footer{background:#111827;padding:52px 0 28px}
 <a href="https://wa.me/56912345678" class="wa-btn">💬</a>
 
 <script>
-// ── Nav scroll
+// ── Nav scroll — threshold 80px para activar pill
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60), {passive:true});
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80), {passive:true});
 
-// ── Dropdown nav (GetJusto style)
+// ── Dropdown nav — hover intent en desktop, click en mobile
+// Hover: 150ms delay para abrir, cierre inmediato al salir
+const isTouchDevice = () => window.matchMedia('(hover:none)').matches;
+let ddTimers = {};
+
+function openDd(id) {
+  const item = document.getElementById(id);
+  document.querySelectorAll('.nav-item').forEach(i => {
+    if (i.id !== id) i.classList.remove('active');
+  });
+  item.classList.add('active');
+}
 function toggleDd(id) {
+  // Click handler — funciona en mobile y como fallback
+  if (!isTouchDevice()) return; // en desktop el hover toma el control
   const item = document.getElementById(id);
   const isOpen = item.classList.contains('active');
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
@@ -836,8 +875,45 @@ function toggleDd(id) {
 function closeDds() {
   document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
 }
+
+// Hover intent — solo en dispositivos con pointer fino (desktop)
+document.querySelectorAll('.nav-item[id]').forEach(item => {
+  item.addEventListener('mouseenter', () => {
+    if (isTouchDevice()) return;
+    clearTimeout(ddTimers[item.id]);
+    ddTimers[item.id] = setTimeout(() => openDd(item.id), 150);
+  });
+  item.addEventListener('mouseleave', () => {
+    if (isTouchDevice()) return;
+    clearTimeout(ddTimers[item.id]);
+    // Cierre inmediato al salir del nav-item completo
+    item.classList.remove('active');
+  });
+});
+
 document.addEventListener('click', e => {
   if (!e.target.closest('.nav-item')) closeDds();
+});
+
+// ── Active section indicator — IntersectionObserver
+const sectionIds = ['productos', 'integraciones', 'precios', 'faq'];
+const navPlainLinks = document.querySelectorAll('.nav-link-plain[data-section]');
+
+const sectionObs = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      navPlainLinks.forEach(link => {
+        const matches = link.dataset.section === id;
+        link.classList.toggle('section-active', matches);
+      });
+    }
+  });
+}, { threshold: 0.4, rootMargin: '-64px 0px -30% 0px' });
+
+sectionIds.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) sectionObs.observe(el);
 });
 
 // ── Mobile menu
