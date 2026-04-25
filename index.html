@@ -29,15 +29,30 @@ body{font-family:var(--font);color:var(--text);background:var(--w);-webkit-font-
 .container{max-width:1120px;margin:0 auto;padding:0 24px}
 a{text-decoration:none;color:inherit}
 
-/* ═══ NAV GETJUSTO STYLE ═══ */
-#nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--w);border-bottom:1px solid var(--border);transition:box-shadow .3s,transform .3s,top .3s,margin .3s,border-radius .3s,border-color .3s}
-#nav.scrolled{box-shadow:0 8px 32px rgba(0,0,0,.12);top:8px;left:50%;right:auto;transform:translateX(-50%);width:calc(100% - 48px);max-width:1200px;border-radius:16px;border-color:transparent}
-#nav.scrolled .nav-top{padding:0 20px}
-@media(min-width:1440px){
-  #nav.scrolled{max-width:960px}
+/* NAV — siempre flotante estilo GetJusto */
+#nav{
+  position:fixed;
+  top:12px;
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 48px);
+  max-width:1160px;
+  z-index:200;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border:1px solid rgba(0,0,0,0.07);
+  border-radius:18px;
+  box-shadow:0 4px 24px rgba(0,0,0,0.07);
+  transition:box-shadow .3s, background .3s;
 }
+#nav.scrolled{
+  box-shadow:0 8px 40px rgba(0,0,0,0.13);
+  background:rgba(255,255,255,0.97);
+}
+/* En mobile: full-width sin pill */
 @media(max-width:768px){
-  #nav.scrolled{top:0;left:0;right:0;transform:none;width:100%;border-radius:0}
+  #nav{top:0;left:0;right:0;transform:none;width:100%;border-radius:0;max-width:none}
 }
 
 .nav-top{position:relative;max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:0}
@@ -81,7 +96,7 @@ a{text-decoration:none;color:inherit}
 .dd-grid.col1{grid-template-columns:1fr}
 .dd-item{display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:var(--r);transition:background .15s;cursor:pointer}
 .dd-item:hover{background:var(--off)}
-.dd-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;margin-top:1px}
+.dd-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
 .dd-text strong{font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:2px}
 .dd-text span{font-size:12px;color:var(--sub);line-height:1.4}
 
@@ -118,7 +133,7 @@ a{text-decoration:none;color:inherit}
 .link-btn:hover{gap:9px}
 
 /* ═══ HERO ═══ */
-.hero{padding:120px 0 72px;background:var(--w);position:relative;overflow:hidden}
+.hero{padding:108px 0 72px;background:var(--w);position:relative;overflow:hidden}
 .hero-blob{position:absolute;border-radius:50%;filter:blur(72px);opacity:.4;pointer-events:none;animation:blob 9s ease-in-out infinite}
 .b1{width:520px;height:520px;background:linear-gradient(135deg,#DBEAFE,#C7D2FE);top:-140px;right:-80px;animation-delay:0s}
 .b2{width:380px;height:380px;background:linear-gradient(135deg,#EDE9FE,#FCE7F3);bottom:-80px;left:-60px;animation-delay:3.5s}
@@ -394,12 +409,12 @@ footer{background:#111827;padding:52px 0 28px}
         </button>
         <div class="nav-dropdown">
           <div class="dd-grid">
-            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#EEF3FF">🤖</div><div class="dd-text"><strong>Motor de IA</strong><span>Agentes inteligentes 24/7 para tu empresa</span></div></a>
-            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#F3F0FF">⚡</div><div class="dd-text"><strong>Automatización</strong><span>Flujos automáticos sin intervención humana</span></div></a>
-            <a href="#integraciones" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#DCFCE7">🔗</div><div class="dd-text"><strong>Integraciones</strong><span>34+ sistemas conectados en tiempo real</span></div></a>
-            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#E0F7FA">💬</div><div class="dd-text"><strong>WhatsApp Business</strong><span>Ventas y soporte automatizados</span></div></a>
-            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#FFF1E8">🛒</div><div class="dd-text"><strong>E-commerce</strong><span>Tienda online con IA integrada</span></div></a>
-            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#FFFBEB">📊</div><div class="dd-text"><strong>Analytics & IA</strong><span>Insights automáticos en tiempo real</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#6366F1,#4F46E5)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="13" rx="1"/><rect x="17" y="4" width="4" height="16" rx="1"/><circle cx="5" cy="7" r="2"/><circle cx="12" cy="4" r="2"/><path d="M5 9V7m7-3v-2m7 1V4"/><path d="M7 8l3-2m7-1l-3 1"/></svg></div><div class="dd-text"><strong>Motor de IA</strong><span>Agentes inteligentes 24/7 para tu empresa</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#8B5CF6,#7C3AED)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><div class="dd-text"><strong>Automatización</strong><span>Flujos automáticos sin intervención humana</span></div></a>
+            <a href="#integraciones" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#10B981,#059669)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="6" r="3"/><circle cx="16" cy="18" r="3"/><path d="M11 6h2a3 3 0 0 1 3 3v5M13 18h-2a3 3 0 0 1-3-3v-5"/></svg></div><div class="dd-text"><strong>Integraciones</strong><span>34+ sistemas conectados en tiempo real</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#06B6D4,#0891B2)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/></svg></div><div class="dd-text"><strong>WhatsApp Business</strong><span>Ventas y soporte automatizados</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#F97316,#EA580C)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></div><div class="dd-text"><strong>E-commerce</strong><span>Tienda online con IA integrada</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#F59E0B,#D97706)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg></div><div class="dd-text"><strong>Analytics & IA</strong><span>Insights automáticos en tiempo real</span></div></a>
           </div>
         </div>
       </div>
@@ -412,12 +427,12 @@ footer{background:#111827;padding:52px 0 28px}
         </button>
         <div class="nav-dropdown">
           <div class="dd-grid">
-            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#F3F0FF">📈</div><div class="dd-text"><strong>Panel de Control</strong><span>Gestión centralizada en tiempo real</span></div></a>
-            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#FEF2F2">📣</div><div class="dd-text"><strong>Marketing Automation</strong><span>Campañas que se ejecutan solas</span></div></a>
-            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#FFFBEB">⭐</div><div class="dd-text"><strong>CRM & Loyalty</strong><span>Fidelización automática de clientes</span></div></a>
-            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#F3F0FF">🚚</div><div class="dd-text"><strong>Logística</strong><span>Rutas y despachos optimizados con IA</span></div></a>
-            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#FEF2F2">🧾</div><div class="dd-text"><strong>Facturación SII</strong><span>DTE automáticos sin errores</span></div></a>
-            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#DCFCE7">🛡️</div><div class="dd-text"><strong>Soporte 24/7</strong><span>IA que nunca duerme ni falla</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5h7M17.5 14v7"/></svg></div><div class="dd-text"><strong>Panel de Control</strong><span>Gestión centralizada en tiempo real</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#F43F5E,#E11D48)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div class="dd-text"><strong>Marketing Automation</strong><span>Campañas que se ejecutan solas</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#F59E0B,#B45309)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="dd-text"><strong>CRM & Loyalty</strong><span>Fidelización automática de clientes</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#6366F1,#4338CA)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h6l-3 5h3l-6 8v-5h-3l3-8z"/><path d="M1 13l4 4 4-4"/></svg></div><div class="dd-text"><strong>Logística</strong><span>Rutas y despachos optimizados con IA</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#EF4444,#DC2626)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div><div class="dd-text"><strong>Facturación SII</strong><span>DTE automáticos sin errores</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:linear-gradient(135deg,#10B981,#047857)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="dd-text"><strong>Soporte 24/7</strong><span>IA que nunca duerme ni falla</span></div></a>
           </div>
         </div>
       </div>
@@ -850,7 +865,7 @@ footer{background:#111827;padding:52px 0 28px}
 <script>
 // ── Nav scroll — threshold 80px para activar pill
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 80), {passive:true});
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), {passive:true});
 
 // ── Dropdown nav — hover intent en desktop, click en mobile
 // Hover: 150ms delay para abrir, cierre inmediato al salir
