@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartConnection — Automatización e IA para Empresas</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --w:#fff;--off:#F7F8FC;--gray:#F2F2F7;--border:#E8E8ED;
+  --text:#111827;--mid:#374151;--sub:#6B7280;--light:#9CA3AF;
+  --blue:#0057FF;--blue-h:#003FBB;--blue-soft:#EEF3FF;
+  --green:#16A34A;--green-soft:#DCFCE7;--green-v:#22C55E;
+  --purple:#7C3AED;--purple-soft:#F3F0FF;
+  --orange:#EA580C;--orange-soft:#FFF1E8;
+  --red:#DC2626;--red-soft:#FEF2F2;
+  --cyan:#0891B2;--cyan-soft:#E0F7FA;
+  --yellow:#D97706;--yellow-soft:#FFFBEB;
+  --grad:linear-gradient(135deg,#0057FF 0%,#7C3AED 100%);
+  --shadow-xs:0 1px 4px rgba(0,0,0,.05);
+  --shadow-sm:0 2px 12px rgba(0,0,0,.07);
+  --shadow:0 8px 32px rgba(0,0,0,.1);
+  --shadow-lg:0 20px 60px rgba(0,0,0,.14);
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","Helvetica Neue",Arial,sans-serif;
+  --r:14px;--r-sm:10px;--r-lg:20px;--r-xl:26px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);color:var(--text);background:var(--w);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+a{text-decoration:none;color:inherit}
+
+/* ═══ NAV GETJUSTO STYLE ═══ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--w);border-bottom:1px solid var(--border);transition:box-shadow .25s}
+#nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.08)}
+
+.nav-top{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:0}
+.nav-logo{font-size:19px;font-weight:800;color:var(--text);margin-right:32px;letter-spacing:-.5px;flex-shrink:0}
+.nav-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+.nav-menu{display:flex;align-items:center;gap:4px;flex:1}
+.nav-item{position:relative}
+.nav-link{display:flex;align-items:center;gap:5px;padding:8px 12px;font-size:14px;font-weight:500;color:var(--mid);border-radius:8px;cursor:pointer;transition:background .15s,color .15s;user-select:none;border:none;background:none}
+.nav-link:hover{background:var(--off);color:var(--text)}
+.nav-link svg{transition:transform .25s;flex-shrink:0}
+.nav-item.active .nav-link svg{transform:rotate(180deg)}
+.nav-link-plain{padding:8px 12px;font-size:14px;font-weight:500;color:var(--mid);border-radius:8px;transition:background .15s,color .15s}
+.nav-link-plain:hover{background:var(--off);color:var(--text)}
+
+/* Dropdown */
+.nav-dropdown{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-8px);background:var(--w);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:0 16px 48px rgba(0,0,0,.13);padding:20px;width:560px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:300}
+.nav-dropdown.sm{width:280px}
+.nav-item.active .nav-dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.dd-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.dd-grid.col1{grid-template-columns:1fr}
+.dd-item{display:flex;align-items:flex-start;gap:12px;padding:12px;border-radius:var(--r);transition:background .15s;cursor:pointer}
+.dd-item:hover{background:var(--off)}
+.dd-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;margin-top:1px}
+.dd-text strong{font-size:13px;font-weight:600;color:var(--text);display:block;margin-bottom:2px}
+.dd-text span{font-size:12px;color:var(--sub);line-height:1.4}
+
+/* Nav right */
+.nav-right{display:flex;align-items:center;gap:10px;margin-left:auto}
+.nav-login{font-size:14px;font-weight:500;color:var(--mid);padding:8px 14px;border-radius:8px;transition:background .15s,color .15s}
+.nav-login:hover{background:var(--off);color:var(--text)}
+.nav-cta{background:var(--blue);color:#fff;font-size:14px;font-weight:600;padding:9px 18px;border-radius:980px;transition:background .2s,transform .15s,box-shadow .2s;white-space:nowrap}
+.nav-cta:hover{background:var(--blue-h);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,87,255,.3)}
+
+/* Mobile nav */
+.nav-ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;margin-left:auto}
+.nav-ham span{width:22px;height:2px;background:var(--text);border-radius:2px;transition:.3s}
+.nav-ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-ham.open span:nth-child(2){opacity:0}
+.nav-ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+.mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:var(--w);z-index:199;overflow-y:auto;padding:16px 24px 40px;border-top:1px solid var(--border)}
+.mobile-menu.open{display:block}
+.mob-section{border-bottom:1px solid var(--border);padding-bottom:16px;margin-bottom:16px}
+.mob-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--light);margin-bottom:12px;padding-top:8px}
+.mob-link{display:flex;align-items:center;gap:12px;padding:12px 0;font-size:15px;font-weight:500;color:var(--text);border-none}
+.mob-link .mob-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+
+/* ═══ BUTTONS ═══ */
+.btn-blue{display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:#fff;padding:13px 26px;border-radius:980px;font-size:15px;font-weight:600;transition:all .2s;border:none;cursor:pointer}
+.btn-blue:hover{background:var(--blue-h);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,87,255,.35)}
+.btn-outline{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--blue);padding:13px 26px;border-radius:980px;font-size:15px;font-weight:600;border:2px solid var(--blue);transition:all .2s}
+.btn-outline:hover{background:var(--blue-soft);transform:translateY(-2px)}
+.link-btn{display:inline-flex;align-items:center;gap:5px;color:var(--blue);font-size:14px;font-weight:600;transition:gap .2s}
+.link-btn:hover{gap:9px}
+
+/* ═══ HERO ═══ */
+.hero{padding:120px 0 72px;background:var(--w);position:relative;overflow:hidden}
+.hero-blob{position:absolute;border-radius:50%;filter:blur(72px);opacity:.4;pointer-events:none;animation:blob 9s ease-in-out infinite}
+.b1{width:520px;height:520px;background:linear-gradient(135deg,#DBEAFE,#C7D2FE);top:-140px;right:-80px;animation-delay:0s}
+.b2{width:380px;height:380px;background:linear-gradient(135deg,#EDE9FE,#FCE7F3);bottom:-80px;left:-60px;animation-delay:3.5s}
+.b3{width:260px;height:260px;background:linear-gradient(135deg,#DBEAFE,#A5F3FC);top:30%;right:10%;animation-delay:6s}
+@keyframes blob{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.08) translateY(-28px)}}
+.hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:var(--blue-soft);color:var(--blue);font-size:12px;font-weight:700;padding:5px 14px;border-radius:20px;margin-bottom:22px;border:1px solid rgba(0,87,255,.12);letter-spacing:.01em}
+.pulse{width:6px;height:6px;background:var(--blue);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+.hero h1{font-size:clamp(38px,5.2vw,66px);font-weight:800;line-height:1.04;letter-spacing:-.035em;color:var(--text);margin-bottom:18px}
+.hero h1 .hi{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{font-size:17px;color:var(--sub);line-height:1.7;margin-bottom:32px;max-width:480px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:36px}
+.hero-social{display:flex;align-items:center;gap:10px}
+.social-avs{display:flex}
+.s-av{width:28px;height:28px;border-radius:50%;border:2.5px solid #fff;margin-right:-9px;font-size:10px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+.social-txt{font-size:13px;color:var(--sub);margin-left:12px}<br>.social-txt b{color:var(--text)}
+.hero-card{background:var(--w);border-radius:var(--r-xl);box-shadow:var(--shadow-lg);padding:26px;border:1px solid var(--border);animation:float 4.5s ease-in-out infinite;position:relative}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.chip-float{position:absolute;background:var(--w);border-radius:var(--r);padding:9px 14px;box-shadow:var(--shadow);display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--text);animation:chipf 5s ease-in-out infinite}
+.cf1{top:-18px;left:-24px;animation-delay:.8s}
+.cf2{bottom:30px;right:-18px;animation-delay:2.2s}
+@keyframes chipf{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.hc-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.hc-title{font-size:13px;font-weight:700;color:var(--text)}
+.hc-live{background:var(--green-soft);color:var(--green);font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+.hc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.hcs{background:var(--off);border-radius:var(--r-sm);padding:11px;text-align:center}
+.hcs-v{font-size:20px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.hcs-l{font-size:9px;color:var(--sub);margin-top:2px}
+.hc-rows{display:flex;flex-direction:column;gap:7px}
+.hc-row{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--off);border-radius:var(--r-sm)}
+.hc-ri{width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.hc-rt{font-size:12px;font-weight:500;color:var(--text);flex:1}
+.st-g{color:var(--green-v);font-size:10px;font-weight:700}
+.st-b{color:var(--blue);font-size:10px;font-weight:700}
+
+/* ═══ MARQUEE ═══ */
+.mq{background:var(--off);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:22px 0}
+.mq-lbl{text-align:center;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--light);margin-bottom:12px}
+.mq-mask{overflow:hidden;mask:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent)}
+.mq-track{display:flex;gap:44px;animation:mq 28s linear infinite;width:max-content}
+.mq-item{font-size:13px;font-weight:600;color:var(--light);white-space:nowrap}
+@keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ═══ METRICS ═══ */
+.metrics-bar{padding:36px 0;border-bottom:1px solid var(--border)}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.met-val{font-size:34px;font-weight:800;color:var(--text);letter-spacing:-.025em;line-height:1}
+.met-lbl{font-size:13px;color:var(--sub);margin-top:5px}
+.met-val .acc{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ═══ SECTIONS ═══ */
+section{padding:96px 0}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.s-title{font-size:clamp(30px,3.8vw,50px);font-weight:800;letter-spacing:-.028em;line-height:1.1;color:var(--text);margin-bottom:14px}
+.s-desc{font-size:17px;color:var(--sub);max-width:520px;line-height:1.65}
+.sec-hd{text-align:center;margin-bottom:52px}
+.sec-hd .s-desc{margin:0 auto}
+
+/* ═══ PRODUCTS ═══ */
+.prod-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.pc{background:var(--w);border:1.5px solid var(--border);border-radius:var(--r-xl);padding:28px;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,border-color .25s;position:relative;overflow:hidden}
+.pc:hover{transform:translateY(-7px);box-shadow:var(--shadow-lg);border-color:transparent}
+.pc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r-xl) var(--r-xl) 0 0;transition:opacity .25s;opacity:0}
+.pc:hover::before{opacity:1}
+.pc.a::before{background:linear-gradient(90deg,#0057FF,#7C3AED)}
+.pc.b::before{background:linear-gradient(90deg,#7C3AED,#EA580C)}
+.pc.c::before{background:linear-gradient(90deg,#16A34A,#0891B2)}
+.pc.d::before{background:linear-gradient(90deg,#0891B2,#0057FF)}
+.pc.e::before{background:linear-gradient(90deg,#EA580C,#D97706)}
+.pc.f::before{background:linear-gradient(90deg,#7C3AED,#0057FF)}
+.pc.g::before{background:linear-gradient(90deg,#DC2626,#EA580C)}
+.pc.h::before{background:linear-gradient(90deg,#0891B2,#16A34A)}
+.pc.i::before{background:linear-gradient(90deg,#D97706,#EA580C)}
+.pc.j::before{background:linear-gradient(90deg,#D97706,#16A34A)}
+.pc.k::before{background:linear-gradient(90deg,#DC2626,#7C3AED)}
+.pc.l::before{background:linear-gradient(90deg,#16A34A,#0891B2)}
+.p-ico{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:23px;margin-bottom:16px;transition:transform .3s}
+.pc:hover .p-ico{transform:scale(1.1)}
+.pc h3{font-size:17px;font-weight:700;color:var(--text);margin-bottom:7px;letter-spacing:-.01em}
+.pc p{font-size:13px;color:var(--sub);line-height:1.65}
+.pc .link-btn{margin-top:14px}
+
+/* ═══ SPOTLIGHT ═══ */
+.spot-sec{background:var(--off)}
+.spot-item{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;padding:72px 0;border-bottom:1px solid var(--border)}
+.spot-item:last-child{border:none}
+.spot-item.rev{direction:rtl}
+.spot-item.rev>*{direction:ltr}
+.st-title{font-size:clamp(26px,3.2vw,42px);font-weight:800;color:var(--text);letter-spacing:-.025em;line-height:1.1;margin-bottom:14px}
+.st-body{font-size:15px;color:var(--sub);line-height:1.75;margin-bottom:22px}
+.flist{list-style:none;display:flex;flex-direction:column;gap:9px;margin-bottom:26px}
+.flist li{font-size:14px;color:var(--mid);display:flex;align-items:center;gap:10px}
+.fck{width:18px;height:18px;border-radius:50%;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;color:var(--blue)}
+.spot-vis{background:var(--w);border-radius:var(--r-xl);padding:24px;box-shadow:var(--shadow);border:1px solid var(--border)}
+.vis-win{background:var(--off);border-radius:var(--r);padding:14px;border:1px solid var(--border)}
+.vis-bar{display:flex;gap:5px;margin-bottom:12px}
+.vd{width:9px;height:9px;border-radius:50%}
+.vd-r{background:#FF5F57}.vd-y{background:#FEBC2E}.vd-g{background:#28C840}
+.vl{height:7px;border-radius:4px;margin-bottom:8px;background:var(--border)}
+.vl.acc{background:linear-gradient(90deg,var(--blue),var(--purple));width:55%}
+.vl.sh{width:38%}.vl.md{width:68%}.vl.fu{width:100%}
+.vc{background:var(--w);border-radius:var(--r-sm);padding:10px;margin-bottom:7px;display:flex;align-items:center;gap:9px;border:1px solid var(--border);transition:box-shadow .2s}
+.vc:hover{box-shadow:var(--shadow-sm)}
+.vav{width:28px;height:28px;border-radius:50%;flex-shrink:0}
+.vstg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:7px}
+.vst{background:var(--w);border-radius:var(--r-sm);padding:9px;text-align:center;border:1px solid var(--border)}
+.vsv{font-size:16px;font-weight:800;color:var(--text)}
+.vsl{font-size:9px;color:var(--sub);margin-top:2px}
+
+/* ═══ INTEGRATIONS ═══ */
+.int-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.chip{background:var(--w);border:1.5px solid var(--border);border-radius:var(--r);padding:15px 9px;text-align:center;font-size:11px;font-weight:600;color:var(--sub);transition:all .28s cubic-bezier(.34,1.56,.64,1)}
+.chip:hover{transform:translateY(-5px) scale(1.05);border-color:var(--blue);color:var(--blue);box-shadow:0 8px 20px rgba(0,87,255,.13)}
+.ci{font-size:21px;margin-bottom:5px}
+
+/* ═══ PRICING ═══ */
+.price-sec{background:var(--off)}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start}
+.pcard{background:var(--w);border:1.5px solid var(--border);border-radius:var(--r-xl);padding:28px;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+.pcard:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.pcard.feat{background:linear-gradient(145deg,#0057FF 0%,#003FBB 100%);border-color:transparent;position:relative;margin-top:-10px}
+.feat-tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#F59E0B,#EF4444);color:#fff;font-size:10px;font-weight:800;padding:4px 14px;border-radius:20px;white-space:nowrap;letter-spacing:.02em}
+.pn{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--light);margin-bottom:5px}
+.pcard.feat .pn{color:rgba(255,255,255,.5)}
+.ptitle{font-size:19px;font-weight:800;color:var(--text);margin-bottom:8px;letter-spacing:-.01em}
+.pcard.feat .ptitle{color:#fff}
+.pamt{font-size:30px;font-weight:800;color:var(--text);letter-spacing:-.02em;line-height:1}
+.pcard.feat .pamt{color:#fff}
+.punit{font-size:11px;color:var(--sub);margin-top:3px;margin-bottom:18px}
+.pcard.feat .punit{color:rgba(255,255,255,.55)}
+.pdesc{font-size:12px;color:var(--sub);line-height:1.65;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+.pcard.feat .pdesc{color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.15)}
+.pfeat{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.pfeat li{font-size:12px;color:var(--sub);display:flex;align-items:flex-start;gap:7px}
+.pcard.feat .pfeat li{color:rgba(255,255,255,.75)}
+.pck{color:var(--blue);flex-shrink:0;font-size:12px;margin-top:1px}
+.pcard.feat .pck{color:rgba(255,255,255,.9)}
+.btn-plan{display:block;text-align:center;padding:11px;border-radius:980px;font-size:13px;font-weight:700;transition:all .2s}
+.bpo{background:var(--blue-soft);color:var(--blue)}
+.bpo:hover{background:var(--blue);color:#fff;transform:scale(1.02)}
+.bpw{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25)}
+.bpw:hover{background:rgba(255,255,255,.25);transform:scale(1.02)}
+
+/* ═══ ROI ═══ */
+.roi-card{background:var(--w);border-radius:var(--r-xl);padding:48px;max-width:740px;margin:0 auto;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
+.roi-card h2{font-size:30px;font-weight:800;letter-spacing:-.025em;margin-bottom:6px}
+.roi-card>p{font-size:15px;color:var(--sub);margin-bottom:32px}
+.slg{margin-bottom:22px}
+.sll{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:9px}
+.slv{color:var(--blue)}
+input[type=range]{width:100%;height:4px;appearance:none;background:var(--border);border-radius:2px;outline:none;cursor:pointer;accent-color:var(--blue)}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:20px;height:20px;border-radius:50%;background:var(--blue);border:3px solid #fff;box-shadow:0 0 0 1.5px var(--blue)}
+.roi-res{background:linear-gradient(135deg,var(--blue-soft),var(--purple-soft));border-radius:var(--r);padding:22px 24px;margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;text-align:center;border:1px solid rgba(0,87,255,.09)}
+.rv{font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.02em}
+.rl{font-size:11px;color:var(--sub);margin-top:3px}
+
+/* ═══ TESTIMONIALS ═══ */
+.tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tc{background:var(--w);border-radius:var(--r-xl);padding:28px;border:1.5px solid var(--border);transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
+.tc:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.t-stars{color:#F59E0B;font-size:13px;letter-spacing:2px;margin-bottom:12px}
+.t-q{font-size:14px;color:var(--text);line-height:1.75;margin-bottom:20px;font-style:italic}
+.t-auth{display:flex;align-items:center;gap:11px}
+.t-av{width:38px;height:38px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:12px;flex-shrink:0}
+.t-name{font-size:13px;font-weight:700;color:var(--text)}
+.t-role{font-size:11px;color:var(--sub)}
+
+/* ═══ FAQ ═══ */
+.faq-wrap{max-width:660px;margin:0 auto}
+.fq{background:var(--off);border-radius:var(--r);margin-bottom:8px;overflow:hidden;border:1.5px solid var(--border);transition:border-color .2s,box-shadow .2s}
+.fq.open{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,87,255,.07)}
+.fq-q{width:100%;text-align:left;padding:17px 18px;font-size:14px;font-weight:600;color:var(--text);background:none;border:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:14px;transition:color .2s}
+.fq-q:hover,.fq.open .fq-q{color:var(--blue)}
+.fq-ic{width:22px;height:22px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;transition:transform .3s,background .2s,color .2s;color:var(--sub)}
+.fq.open .fq-ic{transform:rotate(45deg);background:var(--blue);color:#fff}
+.fq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;font-size:13px;color:var(--sub);line-height:1.75;padding:0 18px}
+.fq.open .fq-a{max-height:200px;padding:0 18px 16px}
+
+/* ═══ CTA FINAL ═══ */
+.cta-sec{background:linear-gradient(135deg,#060B24 0%,#0D1B4B 40%,#160B38 100%);padding:110px 0;text-align:center;position:relative;overflow:hidden}
+.cta-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 50%,rgba(0,87,255,.18),transparent);pointer-events:none}
+.cta-sec h2{font-size:clamp(36px,5.5vw,66px);font-weight:800;color:#fff;letter-spacing:-.035em;line-height:1.05;margin-bottom:16px;position:relative;z-index:1}
+.cta-sec h2 span{background:linear-gradient(90deg,#60A5FA,#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cta-sec p{font-size:17px;color:rgba(255,255,255,.5);max-width:440px;margin:0 auto 32px;line-height:1.6;position:relative;z-index:1}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.cta-btns .btn-blue{font-size:16px;padding:15px 30px}
+.cta-btns .btn-wa{display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;padding:15px 30px;border-radius:980px;font-size:16px;font-weight:600;transition:all .2s}
+.cta-btns .btn-wa:hover{background:#1DAA54;transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,.4)}
+.cta-tags{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-top:28px;position:relative;z-index:1}
+.cta-tags span{font-size:12px;color:rgba(255,255,255,.35);display:flex;align-items:center;gap:5px}
+.cta-tags span::before{content:'✓';color:rgba(255,255,255,.5)}
+
+/* ═══ FOOTER ═══ */
+footer{background:#111827;padding:52px 0 28px}
+.ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr;gap:28px;margin-bottom:40px}
+.ft-brand .ft-logo{font-size:18px;font-weight:800;color:#fff;letter-spacing:-.4px}
+.ft-brand .ft-logo span{background:linear-gradient(90deg,#60A5FA,#A78BFA);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ft-brand p{font-size:12px;color:rgba(255,255,255,.3);line-height:1.8;margin-top:10px;max-width:210px}
+.ft-col h4{font-size:11px;font-weight:700;color:rgba(255,255,255,.6);margin-bottom:13px;letter-spacing:.05em;text-transform:uppercase}
+.ft-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ft-col ul li a{font-size:12px;color:rgba(255,255,255,.28);transition:color .2s}
+.ft-col ul li a:hover{color:rgba(255,255,255,.65)}
+.ft-bot{border-top:1px solid rgba(255,255,255,.07);padding-top:20px;display:flex;justify-content:space-between;align-items:center}
+.ft-bot p{font-size:11px;color:rgba(255,255,255,.18)}
+.ft-bdgs{display:flex;gap:9px}
+.ft-bdg{font-size:10px;color:rgba(255,255,255,.22);padding:4px 10px;border:1px solid rgba(255,255,255,.1);border-radius:20px}
+
+/* ═══ ANIMATIONS ═══ */
+.reveal{opacity:0;transform:translateY(34px);transition:opacity .65s cubic-bezier(.16,1,.3,1),transform .65s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.d1{transition-delay:.07s}.reveal.d2{transition-delay:.14s}.reveal.d3{transition-delay:.21s}
+.reveal.d4{transition-delay:.28s}.reveal.d5{transition-delay:.35s}.reveal.d6{transition-delay:.42s}
+.reveal.from-left{transform:translateX(-32px)}
+.reveal.from-right{transform:translateX(32px)}
+.reveal.from-left.in,.reveal.from-right.in{transform:translateX(0)}
+
+/* Hero load anim */
+@keyframes fadeUp{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:translateY(0)}}
+.ha1{animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .1s both}
+.ha2{animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .22s both}
+.ha3{animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .36s both}
+.ha4{animation:fadeUp .8s cubic-bezier(.16,1,.3,1) .5s both}
+.ha5{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) .65s both}
+
+/* WhatsApp */
+.wa-btn{position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 20px rgba(37,211,102,.4);z-index:999;transition:transform .2s,box-shadow .2s}
+.wa-btn:hover{transform:scale(1.12);box-shadow:0 8px 28px rgba(37,211,102,.55)}
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:1024px){
+  .prod-grid{grid-template-columns:repeat(2,1fr)}
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+  .int-grid{grid-template-columns:repeat(4,1fr)}
+  .ft-grid{grid-template-columns:1fr 1fr}
+  .hero-inner{gap:36px}
+  .nav-dropdown{width:460px}
+  .nav-dropdown.sm{width:240px}
+}
+@media(max-width:768px){
+  section{padding:68px 0}
+  .hero{padding:90px 0 56px}
+  .hero-inner{grid-template-columns:1fr}
+  .hero-card,.chip-float{display:none}
+  .prod-grid,.pgrid,.tgrid{grid-template-columns:1fr}
+  .spot-item,.spot-item.rev{grid-template-columns:1fr;direction:ltr}
+  .int-grid{grid-template-columns:repeat(3,1fr)}
+  .metrics-grid{grid-template-columns:repeat(2,1fr)}
+  .ft-grid{grid-template-columns:1fr 1fr}
+  .roi-card{padding:28px 20px}
+  .roi-res{grid-template-columns:1fr}
+  .nav-menu,.nav-right{display:none}
+  .nav-ham{display:flex}
+  .nav-cta{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV GETJUSTO STYLE ═══════════════ -->
+<nav id="nav">
+  <div class="nav-top">
+    <a href="#" class="nav-logo">Smart<span>Connection</span></a>
+
+    <div class="nav-menu">
+
+      <!-- Soluciones dropdown -->
+      <div class="nav-item" id="dd-sol">
+        <button class="nav-link" onclick="toggleDd('dd-sol')">
+          Soluciones
+          <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1l5 5 5-5" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown">
+          <div class="dd-grid">
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#EEF3FF">🤖</div><div class="dd-text"><strong>Motor de IA</strong><span>Agentes inteligentes 24/7 para tu empresa</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#F3F0FF">⚡</div><div class="dd-text"><strong>Automatización</strong><span>Flujos automáticos sin intervención humana</span></div></a>
+            <a href="#integraciones" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#DCFCE7">🔗</div><div class="dd-text"><strong>Integraciones</strong><span>34+ sistemas conectados en tiempo real</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#E0F7FA">💬</div><div class="dd-text"><strong>WhatsApp Business</strong><span>Ventas y soporte automatizados</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#FFF1E8">🛒</div><div class="dd-text"><strong>E-commerce</strong><span>Tienda online con IA integrada</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#FFFBEB">📊</div><div class="dd-text"><strong>Analytics & IA</strong><span>Insights automáticos en tiempo real</span></div></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Productos dropdown -->
+      <div class="nav-item" id="dd-prod">
+        <button class="nav-link" onclick="toggleDd('dd-prod')">
+          Productos
+          <svg width="12" height="7" viewBox="0 0 12 7" fill="none"><path d="M1 1l5 5 5-5" stroke="#6B7280" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="nav-dropdown">
+          <div class="dd-grid">
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#F3F0FF">📈</div><div class="dd-text"><strong>Panel de Control</strong><span>Gestión centralizada en tiempo real</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#FEF2F2">📣</div><div class="dd-text"><strong>Marketing Automation</strong><span>Campañas que se ejecutan solas</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#FFFBEB">⭐</div><div class="dd-text"><strong>CRM & Loyalty</strong><span>Fidelización automática de clientes</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#F3F0FF">🚚</div><div class="dd-text"><strong>Logística</strong><span>Rutas y despachos optimizados con IA</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#FEF2F2">🧾</div><div class="dd-text"><strong>Facturación SII</strong><span>DTE automáticos sin errores</span></div></a>
+            <a href="#productos" class="dd-item" onclick="closeDds()"><div class="dd-icon" style="background:#DCFCE7">🛡️</div><div class="dd-text"><strong>Soporte 24/7</strong><span>IA que nunca duerme ni falla</span></div></a>
+          </div>
+        </div>
+      </div>
+
+      <a href="#precios" class="nav-link-plain">Planes</a>
+      <a href="#faq" class="nav-link-plain">FAQ</a>
+      <a href="https://wa.me/56912345678" class="nav-link-plain">💬 WhatsApp</a>
+    </div>
+
+    <div class="nav-right">
+      <a href="mailto:hola@smconnection.cl" class="nav-login">Contacto</a>
+      <a href="#contacto" class="nav-cta">Quiero tener SmartConnection</a>
+    </div>
+
+    <div class="nav-ham" id="ham" onclick="toggleMobile()">
+      <span></span><span></span><span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mob-menu">
+  <div class="mob-section">
+    <div class="mob-section-title">Soluciones</div>
+    <a href="#productos" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#EEF3FF">🤖</div>Motor de IA</a>
+    <a href="#productos" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#F3F0FF">⚡</div>Automatización</a>
+    <a href="#integraciones" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#DCFCE7">🔗</div>Integraciones</a>
+    <a href="#productos" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#E0F7FA">💬</div>WhatsApp Business</a>
+  </div>
+  <div class="mob-section">
+    <div class="mob-section-title">Productos</div>
+    <a href="#productos" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#F3F0FF">📊</div>Panel de Control</a>
+    <a href="#productos" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#FFFBEB">⭐</div>CRM & Loyalty</a>
+    <a href="#productos" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#FEF2F2">🧾</div>Facturación SII</a>
+  </div>
+  <div class="mob-section">
+    <a href="#precios" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#EEF3FF">💰</div>Planes y Precios</a>
+    <a href="#faq" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#F3F0FF">❓</div>Preguntas frecuentes</a>
+  </div>
+  <a href="#contacto" class="btn-blue" style="width:100%;justify-content:center;margin-top:8px" onclick="closeMobile()">Quiero tener SmartConnection</a>
+</div>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="hero-blob b1"></div>
+  <div class="hero-blob b2"></div>
+  <div class="hero-blob b3"></div>
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge ha1"><span class="pulse"></span>Automatización empresarial con IA</div>
+        <h1 class="ha2">Automatiza.<br>Integra.<br><span class="hi">Escala.</span></h1>
+        <p class="hero-sub ha3">Conectamos tus sistemas, automatizamos tus procesos y ponemos IA a trabajar por tu empresa. Sin freelancers eternos. Resultados en semanas.</p>
+        <div class="hero-ctas ha4">
+          <a href="#contacto" class="btn-blue">Quiero tener SmartConnection →</a>
+          <a href="#productos" class="btn-outline">Ver soluciones</a>
+        </div>
+        <div class="hero-social ha5">
+          <div class="social-avs">
+            <div class="s-av" style="background:linear-gradient(135deg,#0057FF,#7C3AED)">MR</div>
+            <div class="s-av" style="background:linear-gradient(135deg,#7C3AED,#EA580C)">CP</div>
+            <div class="s-av" style="background:linear-gradient(135deg,#16A34A,#0891B2)">AL</div>
+          </div>
+          <p class="social-txt"><b>+40 empresas</b> ya automatizando</p>
+        </div>
+      </div>
+      <div class="hero-card ha5">
+        <div class="chip-float cf1">⚡ <span>320 pedidos hoy</span></div>
+        <div class="chip-float cf2">🤖 <span>IA activa 24/7</span></div>
+        <div class="hc-head"><span class="hc-title">Panel SmartConnection</span><span class="hc-live">● En vivo</span></div>
+        <div class="hc-stats">
+          <div class="hcs"><div class="hcs-v" id="hc1">0</div><div class="hcs-l">Pedidos/mes</div></div>
+          <div class="hcs"><div class="hcs-v" id="hc2">0</div><div class="hcs-l">Consultas IA</div></div>
+          <div class="hcs"><div class="hcs-v">0%</div><div class="hcs-l">Errores</div></div>
+        </div>
+        <div class="hc-rows">
+          <div class="hc-row"><div class="hc-ri" style="background:#EEF3FF">💬</div><span class="hc-rt">WhatsApp → Bsale sync</span><span class="st-g">● Activo</span></div>
+          <div class="hc-row"><div class="hc-ri" style="background:#DCFCE7">🤖</div><span class="hc-rt">Motor de IA respondiendo</span><span class="st-g">● Activo</span></div>
+          <div class="hc-row"><div class="hc-ri" style="background:#F3F0FF">📊</div><span class="hc-rt">Analytics en tiempo real</span><span class="st-b">● Sync</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="mq">
+  <div class="mq-lbl">Tecnologías que conectamos</div>
+  <div class="mq-mask">
+    <div class="mq-track">
+      <span class="mq-item">WhatsApp Business</span><span class="mq-item">·</span><span class="mq-item">Bsale</span><span class="mq-item">·</span><span class="mq-item">SAP</span><span class="mq-item">·</span><span class="mq-item">Jumpseller</span><span class="mq-item">·</span><span class="mq-item">SII Chile</span><span class="mq-item">·</span><span class="mq-item">Shopify</span><span class="mq-item">·</span><span class="mq-item">HubSpot</span><span class="mq-item">·</span><span class="mq-item">Stripe</span><span class="mq-item">·</span><span class="mq-item">Slack</span><span class="mq-item">·</span><span class="mq-item">Google Workspace</span><span class="mq-item">·</span><span class="mq-item">OpenAI GPT-4</span><span class="mq-item">·</span><span class="mq-item">Claude AI</span><span class="mq-item">·</span><span class="mq-item">n8n</span><span class="mq-item">·</span><span class="mq-item">Make</span><span class="mq-item">·</span>
+      <span class="mq-item">WhatsApp Business</span><span class="mq-item">·</span><span class="mq-item">Bsale</span><span class="mq-item">·</span><span class="mq-item">SAP</span><span class="mq-item">·</span><span class="mq-item">Jumpseller</span><span class="mq-item">·</span><span class="mq-item">SII Chile</span><span class="mq-item">·</span><span class="mq-item">Shopify</span><span class="mq-item">·</span><span class="mq-item">HubSpot</span><span class="mq-item">·</span><span class="mq-item">Stripe</span><span class="mq-item">·</span><span class="mq-item">Slack</span><span class="mq-item">·</span><span class="mq-item">Google Workspace</span><span class="mq-item">·</span><span class="mq-item">OpenAI GPT-4</span><span class="mq-item">·</span><span class="mq-item">Claude AI</span><span class="mq-item">·</span><span class="mq-item">n8n</span><span class="mq-item">·</span><span class="mq-item">Make</span><span class="mq-item">·</span>
+    </div>
+  </div>
+</div>
+
+<!-- METRICS -->
+<div class="metrics-bar">
+  <div class="container">
+    <div class="metrics-grid reveal">
+      <div><div class="met-val"><span id="m1" class="acc">0</span>+</div><div class="met-lbl">Pedidos automatizados/mes</div></div>
+      <div><div class="met-val"><span id="m2" class="acc">0</span>%</div><div class="met-lbl">Más eficiencia operativa</div></div>
+      <div><div class="met-val"><span id="m3" class="acc">0</span>+</div><div class="met-lbl">Tecnologías integradas</div></div>
+      <div><div class="met-val" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">24/7</div><div class="met-lbl">Operación sin intervención</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PRODUCTS ═══ -->
+<section id="productos">
+  <div class="container">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">12 soluciones listas</div>
+      <h2 class="s-title">Todo lo que tu empresa necesita,<br>en una sola plataforma.</h2>
+      <p class="s-desc">34 tecnologías integradas. Implementación en semanas, no en meses.</p>
+    </div>
+    <div class="prod-grid">
+      <div class="pc a reveal d1"><div class="p-ico" style="background:#EEF3FF">🤖</div><h3>Motor de IA</h3><p>Agentes inteligentes entrenados en tu negocio. Responden, analizan y ejecutan las 24 horas.</p><span class="link-btn">Conocer más →</span></div>
+      <div class="pc b reveal d2"><div class="p-ico" style="background:#F3F0FF">⚡</div><h3>Automatización</h3><p>Flujos que reemplazan tareas repetitivas. De cotizaciones a facturación, completamente solos.</p><span class="link-btn">Conocer más →</span></div>
+      <div class="pc c reveal d3"><div class="p-ico" style="background:#DCFCE7">🔗</div><h3>Integración de Sistemas</h3><p>Conecta SAP, Bsale, SII, CRM y más en un ecosistema unificado que sincroniza en tiempo real.</p><span class="link-btn">Conocer más →</span></div>
+      <div class="pc d reveal d1"><div class="p-ico" style="background:#E0F7FA">💬</div><h3>WhatsApp Business</h3><p>Ventas, soporte y seguimiento automatizados. Tu canal más eficiente operando 24/7.</p><span class="link-btn">Conocer más →</span></div>
+      <div class="pc e reveal d2"><div class="p-ico" style="background:#FFF1E8">🛒</div><h3>E-commerce Inteligente</h3><p>Tienda online con IA: recomendaciones personalizadas, stock en tiempo real y checkout automático.</p><span class="link-btn">Conocer más →</span></div>
+      <div class="pc f reveal d3"><div class="p-ico" style="background:#F3F0FF">📊</div><h3>Panel de Control</h3><p>Gestión centralizada de ventas, operaciones y métricas en tiempo real desde cualquier dispositivo.</p><span class="link-btn">Conocer más →</span></div>
+      <div class="pc g reveal d1"><div class="p-ico" style="background:#FEF2F2">📣</div><h3>Marketing Automation</h3><p>Campañas de email, SMS y WhatsApp que se ejecutan solas según el comportamiento del cliente.</p><span class="link-btn">Conocer más →</span></div>
+      <div class="pc h reveal d2"><div class="p-ico" style="background:#E0F7FA">📈</div><h3>Analytics & Reportes</h3><p>Dashboards con IA que detecta patrones, anomalías y oportunidades automáticamente.</p><span class="link-btn">Conocer más →</span></div>
+      <div class="pc i reveal d3"><div class="p-ico" style="background:#FFFBEB">⭐</div><h3>CRM & Loyalty</h3><p>Fidelización automática: puntos, recompensas y retención sin trabajo manual del equipo.</p><span class="link-btn">Conocer más →</span></div>
+      <div class="pc j reveal d1"><div class="p-ico" style="background:#FFF7ED">🚚</div><h3>Logística Inteligente</h3><p>Seguimiento de pedidos, rutas optimizadas y sincronización con operadores logísticos en tiempo real.</p><span class="link-btn">Conocer más →</span></div>
+      <div class="pc k reveal d2"><div class="p-ico" style="background:#FEF2F2">🧾</div><h3>Facturación SII</h3><p>DTE, boletas y facturas electrónicas automáticas. Cero errores y cero demoras tributarias.</p><span class="link-btn">Conocer más →</span></div>
+      <div class="pc l reveal d3"><div class="p-ico" style="background:#DCFCE7">🛡️</div><h3>Soporte 24/7</h3><p>IA entrenada en tu empresa que responde sin horario y escala a humanos cuando se requiere.</p><span class="link-btn">Conocer más →</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SPOTLIGHT ═══ -->
+<section class="spot-sec">
+  <div class="container">
+
+    <div class="spot-item">
+      <div class="reveal from-left">
+        <div class="eyebrow">Motor de IA</div>
+        <h2 class="st-title">IA que trabaja mientras tú duermes.</h2>
+        <p class="st-body">Agentes inteligentes entrenados en tu negocio que responden, analizan, deciden y ejecutan — 24 horas, 7 días, sin supervisión humana.</p>
+        <ul class="flist">
+          <li><span class="fck">✓</span>Agentes con memoria persistente de contexto</li>
+          <li><span class="fck">✓</span>Integración nativa con GPT-4 y Claude AI</li>
+          <li><span class="fck">✓</span>Entrenamiento con tu documentación interna</li>
+          <li><span class="fck">✓</span>Escalada automática a humanos cuando se requiere</li>
+          <li><span class="fck">✓</span>Trazabilidad completa de cada decisión</li>
+        </ul>
+        <a href="#contacto" class="btn-blue" style="font-size:14px;padding:11px 22px">Ver demo →</a>
+      </div>
+      <div class="reveal from-right">
+        <div class="spot-vis">
+          <div class="vis-win">
+            <div class="vis-bar"><div class="vd vd-r"></div><div class="vd vd-y"></div><div class="vd vd-g"></div></div>
+            <div class="vl acc"></div>
+            <div class="vc"><div class="vav" style="background:linear-gradient(135deg,#0057FF,#7C3AED)"></div><div style="flex:1"><div class="vl md" style="height:6px;margin-bottom:5px"></div><div class="vl sh" style="height:5px;margin-bottom:0;background:#EEF3FF"></div></div></div>
+            <div class="vc"><div class="vav" style="background:linear-gradient(135deg,#7C3AED,#EA580C)"></div><div style="flex:1"><div class="vl fu" style="height:6px;margin-bottom:5px"></div><div class="vl md" style="height:5px;margin-bottom:0;background:#F3F0FF"></div></div></div>
+            <div class="vstg">
+              <div class="vst"><div class="vsv" style="color:#0057FF">148</div><div class="vsl">Consultas hoy</div></div>
+              <div class="vst"><div class="vsv" style="color:#16A34A">99%</div><div class="vsl">Resolución</div></div>
+              <div class="vst"><div class="vsv" style="color:#7C3AED">1.2s</div><div class="vsl">T. respuesta</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spot-item rev">
+      <div class="reveal from-right">
+        <div class="eyebrow">Integraciones</div>
+        <h2 class="st-title">Todos tus sistemas hablando entre sí.</h2>
+        <p class="st-body">No más copiar y pegar entre plataformas. Conectamos tu ERP, CRM, e-commerce, contabilidad y WhatsApp en un flujo unificado que opera solo.</p>
+        <ul class="flist">
+          <li><span class="fck">✓</span>34+ integraciones nativas disponibles</li>
+          <li><span class="fck">✓</span>SAP, Bsale, Jumpseller, Shopify y más</li>
+          <li><span class="fck">✓</span>Sincronización bidireccional en tiempo real</li>
+          <li><span class="fck">✓</span>API propia para integraciones personalizadas</li>
+          <li><span class="fck">✓</span>Sin pérdida de datos entre sistemas</li>
+        </ul>
+        <a href="#integraciones" class="btn-blue" style="font-size:14px;padding:11px 22px">Ver integraciones →</a>
+      </div>
+      <div class="reveal from-left">
+        <div class="spot-vis">
+          <div class="vis-win">
+            <div class="vis-bar"><div class="vd vd-r"></div><div class="vd vd-y"></div><div class="vd vd-g"></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+              <div class="vst" style="background:#EEF3FF;border-color:rgba(0,87,255,.1)"><div style="font-size:18px;margin-bottom:3px">🛍️</div><div style="font-size:11px;font-weight:700;color:var(--text)">Bsale</div><div style="font-size:9px;color:var(--green-v);font-weight:700">● Conectado</div></div>
+              <div class="vst" style="background:#F3F0FF;border-color:rgba(124,58,237,.1)"><div style="font-size:18px;margin-bottom:3px">🏢</div><div style="font-size:11px;font-weight:700;color:var(--text)">SAP</div><div style="font-size:9px;color:var(--green-v);font-weight:700">● Conectado</div></div>
+              <div class="vst" style="background:#E0F7FA;border-color:rgba(8,145,178,.1)"><div style="font-size:18px;margin-bottom:3px">🛒</div><div style="font-size:11px;font-weight:700;color:var(--text)">Jumpseller</div><div style="font-size:9px;color:var(--green-v);font-weight:700">● Conectado</div></div>
+              <div class="vst" style="background:#DCFCE7;border-color:rgba(22,163,74,.1)"><div style="font-size:18px;margin-bottom:3px">💬</div><div style="font-size:11px;font-weight:700;color:var(--text)">WhatsApp</div><div style="font-size:9px;color:var(--green-v);font-weight:700">● Conectado</div></div>
+            </div>
+            <div style="background:var(--off);border-radius:var(--r-sm);padding:10px 12px;border:1px solid var(--border)"><div style="font-size:10px;color:var(--sub);margin-bottom:3px">Último sync</div><div style="font-size:12px;font-weight:700;color:var(--text)">320 pedidos sincronizados — hace 2 min</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="spot-item">
+      <div class="reveal from-left">
+        <div class="eyebrow">Automatización</div>
+        <h2 class="st-title">Procesos que se ejecutan solos. Para siempre.</h2>
+        <p class="st-body">Desde la recepción de un pedido hasta su entrega y facturación, todo ocurre automáticamente. Tu equipo se enfoca en crecer.</p>
+        <ul class="flist">
+          <li><span class="fck">✓</span>Flujos drag & drop fáciles de editar</li>
+          <li><span class="fck">✓</span>Triggers por evento, horario o condición</li>
+          <li><span class="fck">✓</span>Manejo de errores y reintentos automáticos</li>
+          <li><span class="fck">✓</span>Historial completo de ejecuciones</li>
+          <li><span class="fck">✓</span>Notificaciones al equipo en tiempo real</li>
+        </ul>
+        <a href="#contacto" class="btn-blue" style="font-size:14px;padding:11px 22px">Ver automatizaciones →</a>
+      </div>
+      <div class="reveal from-right">
+        <div class="spot-vis">
+          <div class="vis-win">
+            <div class="vis-bar"><div class="vd vd-r"></div><div class="vd vd-y"></div><div class="vd vd-g"></div></div>
+            <div style="display:flex;flex-direction:column;gap:6px;padding:4px 0">
+              <div style="display:flex;align-items:center;gap:9px;padding:10px;background:#DCFCE7;border-radius:var(--r-sm);border:1px solid rgba(22,163,74,.15)"><div style="width:30px;height:30px;border-radius:8px;background:#DCFCE7;display:flex;align-items:center;justify-content:center;font-size:13px">💬</div><div><div style="font-size:11px;font-weight:700;color:var(--text)">Pedido WhatsApp</div><div style="font-size:9px;color:var(--sub)">Trigger automático</div></div><div style="margin-left:auto;font-size:9px;font-weight:700;color:var(--green-v)">● Activo</div></div>
+              <div style="width:2px;height:8px;background:var(--border);margin:0 14px"></div>
+              <div style="display:flex;align-items:center;gap:9px;padding:10px;background:#EEF3FF;border-radius:var(--r-sm);border:1px solid rgba(0,87,255,.12)"><div style="width:30px;height:30px;border-radius:8px;background:#EEF3FF;display:flex;align-items:center;justify-content:center;font-size:13px">🔄</div><div><div style="font-size:11px;font-weight:700;color:var(--text)">Crear en Bsale + DTE</div><div style="font-size:9px;color:var(--sub)">Procesado automático</div></div></div>
+              <div style="width:2px;height:8px;background:var(--border);margin:0 14px"></div>
+              <div style="display:flex;align-items:center;gap:9px;padding:10px;background:#F3F0FF;border-radius:var(--r-sm);border:1px solid rgba(124,58,237,.12)"><div style="width:30px;height:30px;border-radius:8px;background:#F3F0FF;display:flex;align-items:center;justify-content:center;font-size:13px">📦</div><div><div style="font-size:11px;font-weight:700;color:var(--text)">Despacho + notificación</div><div style="font-size:9px;color:var(--sub)">Cliente informado</div></div></div>
+              <div style="width:2px;height:8px;background:var(--border);margin:0 14px"></div>
+              <div style="display:flex;align-items:center;gap:9px;padding:10px;background:#FFFBEB;border-radius:var(--r-sm);border:1px solid rgba(217,119,6,.12)"><div style="width:30px;height:30px;border-radius:8px;background:#FFFBEB;display:flex;align-items:center;justify-content:center;font-size:13px">✅</div><div><div style="font-size:11px;font-weight:700;color:var(--text)">Completado + encuesta</div><div style="font-size:9px;color:var(--sub)">Loop cerrado</div></div><div style="margin-left:auto;font-size:9px;font-weight:800;color:var(--yellow)">2.4s</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ INTEGRATIONS ═══ -->
+<section id="integraciones">
+  <div class="container">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">34+ integraciones</div>
+      <h2 class="s-title">Se integra con las herramientas que ya usas.</h2>
+      <p class="s-desc">No cambias tus sistemas. SmartConnection potencia lo que ya tienes.</p>
+    </div>
+    <div class="int-grid">
+      <div class="chip reveal d1"><div class="ci">💬</div>WhatsApp</div>
+      <div class="chip reveal d1"><div class="ci">🏢</div>SAP</div>
+      <div class="chip reveal d2"><div class="ci">🛍️</div>Bsale</div>
+      <div class="chip reveal d2"><div class="ci">🛒</div>Jumpseller</div>
+      <div class="chip reveal d3"><div class="ci">🧾</div>SII Chile</div>
+      <div class="chip reveal d3"><div class="ci">🏪</div>Shopify</div>
+      <div class="chip reveal d1"><div class="ci">🤝</div>HubSpot</div>
+      <div class="chip reveal d1"><div class="ci">📧</div>SendGrid</div>
+      <div class="chip reveal d2"><div class="ci">💳</div>Stripe</div>
+      <div class="chip reveal d2"><div class="ci">💼</div>Slack</div>
+      <div class="chip reveal d3"><div class="ci">📊</div>Google Sheets</div>
+      <div class="chip reveal d3"><div class="ci">📅</div>Google Cal</div>
+      <div class="chip reveal d1"><div class="ci">🤖</div>OpenAI</div>
+      <div class="chip reveal d2"><div class="ci">🧠</div>Claude AI</div>
+      <div class="chip reveal d2"><div class="ci">⚙️</div>n8n</div>
+      <div class="chip reveal d3"><div class="ci">🔄</div>Make</div>
+      <div class="chip reveal d3"><div class="ci">🐘</div>PostgreSQL</div>
+      <div class="chip reveal d1"><div class="ci">⚡</div>Redis</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ═══ -->
+<section class="price-sec" id="precios">
+  <div class="container">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">Planes y precios</div>
+      <h2 class="s-title">El plan correcto para<br>cada etapa de tu empresa.</h2>
+      <p class="s-desc">Sin contratos de exclusividad. Sin letra chica.</p>
+    </div>
+    <div class="pgrid">
+      <div class="pcard reveal d1">
+        <div class="pn">Comenzar</div>
+        <div class="ptitle">Discovery Sprint</div>
+        <div class="pamt">19 <span style="font-size:15px;font-weight:600">UF</span></div>
+        <div class="punit">Pago único · 1 semana</div>
+        <p class="pdesc">Diagnóstico real y plan concreto antes de comprometerte a construir nada.</p>
+        <ul class="pfeat">
+          <li><span class="pck">✓</span>Mapa completo de procesos actuales</li>
+          <li><span class="pck">✓</span>3 cuellos de botella con impacto financiero</li>
+          <li><span class="pck">✓</span>Plan de solución con presupuesto real</li>
+          <li><span class="pck">✓</span>Recomendación SaaS, Build o híbrido</li>
+          <li><span class="pck">✓</span>Entregables en 5 días hábiles</li>
+        </ul>
+        <a href="#contacto" class="btn-plan bpo">Agendar Sprint →</a>
+      </div>
+      <div class="pcard reveal d2">
+        <div class="pn">Escalar rápido</div>
+        <div class="ptitle">SaaS Start</div>
+        <div class="pamt" style="font-size:16px;padding-top:4px">Próximamente</div>
+        <div class="punit">Suscripción mensual</div>
+        <p class="pdesc">Plataforma lista desde el día uno. Resultados visibles en la primera semana.</p>
+        <ul class="pfeat">
+          <li><span class="pck">✓</span>Quick wins en la primera semana</li>
+          <li><span class="pck">✓</span>Sin inversión inicial en desarrollo</li>
+          <li><span class="pck">✓</span>Integraciones con tus sistemas</li>
+          <li><span class="pck">✓</span>Soporte y actualizaciones incluidas</li>
+          <li><span class="pck">✓</span>Escala a Build Premium cuando quieras</li>
+        </ul>
+        <a href="#contacto" class="btn-plan bpo">Notificarme →</a>
+      </div>
+      <div class="pcard feat reveal d3">
+        <div class="feat-tag">⭐ MÁS POPULAR</div>
+        <div class="pn">Construir</div>
+        <div class="ptitle">Build Premium</div>
+        <div class="pamt">50–750 <span style="font-size:15px;font-weight:600">UF</span></div>
+        <div class="punit">Por proyecto · Precio fijo por hito</div>
+        <p class="pdesc">Software funcionable — no mockups. Código 100% tuyo desde el primer commit.</p>
+        <ul class="pfeat">
+          <li><span class="pck">✓</span>Software funcionable (no mockups)</li>
+          <li><span class="pck">✓</span>Código 100% tuyo con acceso al repo</li>
+          <li><span class="pck">✓</span>Entrega por hitos con precio fijo</li>
+          <li><span class="pck">✓</span>Sin dependencia de SmartConnection</li>
+          <li><span class="pck">✓</span>Capacitación del equipo incluida</li>
+          <li><span class="pck">✓</span>Deploy en producción incluido</li>
+        </ul>
+        <a href="#contacto" class="btn-plan bpw">Iniciar proyecto →</a>
+      </div>
+      <div class="pcard reveal d4">
+        <div class="pn">Crecer juntos</div>
+        <div class="ptitle">Project + Support</div>
+        <div class="pamt" style="font-size:16px;padding-top:4px">A medida</div>
+        <div class="punit">Semestral / Anual · SLA garantizado</div>
+        <p class="pdesc">Todo Build Premium más monitoreo 24/7, mejoras continuas y equipo dedicado.</p>
+        <ul class="pfeat">
+          <li><span class="pck">✓</span>Todo lo de Build Premium</li>
+          <li><span class="pck">✓</span>Monitoreo activo 24/7</li>
+          <li><span class="pck">✓</span>Ajustes y mejoras continuas</li>
+          <li><span class="pck">✓</span>SLA con respuesta garantizada</li>
+          <li><span class="pck">✓</span>Canal dedicado al equipo</li>
+          <li><span class="pck">✓</span>Reportes mensuales</li>
+        </ul>
+        <a href="#contacto" class="btn-plan bpo">Cotizar →</a>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:28px;font-size:12px;color:var(--light)">Sin contratos de exclusividad · Sin letra chica · IVA no incluido en precios en UF</p>
+  </div>
+</section>
+
+<!-- ═══ ROI ═══ -->
+<section>
+  <div class="container">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">Calculadora de ROI</div>
+      <h2 class="s-title">¿Cuánto estás perdiendo<br>por no automatizar?</h2>
+    </div>
+    <div class="roi-card reveal d1">
+      <h2>Calcula tu ahorro real</h2>
+      <p>Ajusta los valores según tu empresa y ve el impacto estimado en 90 días.</p>
+      <div class="slg"><div class="sll"><span>Empleados en tareas manuales</span><span class="slv" id="ev">5 personas</span></div><input type="range" min="1" max="50" value="5" id="es" oninput="roi()"></div>
+      <div class="slg"><div class="sll"><span>Horas manuales por semana</span><span class="slv" id="hv">20 horas</span></div><input type="range" min="5" max="160" value="20" id="hs" oninput="roi()"></div>
+      <div class="slg"><div class="sll"><span>Costo hora promedio (USD)</span><span class="slv" id="cv">$15/hora</span></div><input type="range" min="5" max="100" value="15" id="cs" oninput="roi()"></div>
+      <div class="roi-res">
+        <div><div class="rv" id="sv">$11,700</div><div class="rl">Ahorro en 90 días</div></div>
+        <div><div class="rv" id="ht">1,800 hrs</div><div class="rl">Horas recuperadas</div></div>
+        <div><div class="rv" id="rv2">3.9x</div><div class="rl">ROI estimado</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section style="background:var(--off)">
+  <div class="container">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">Resultados reales</div>
+      <h2 class="s-title">Empresas que ya trabajan diferente.</h2>
+    </div>
+    <div class="tgrid">
+      <div class="tc reveal d1"><div class="t-stars">★★★★★</div><p class="t-q">"En 3 semanas automatizamos el 80% de nuestras órdenes de compra. El equipo ahora negocia mejores proveedores en vez de copiar datos entre planillas."</p><div class="t-auth"><div class="t-av">MR</div><div><div class="t-name">María Rodríguez</div><div class="t-role">Gerente de Operaciones · Distribuidora Norte</div></div></div></div>
+      <div class="tc reveal d2"><div class="t-stars">★★★★★</div><p class="t-q">"El bot de WhatsApp responde mejor que muchos humanos. El tiempo de respuesta bajó de 4 horas a 30 segundos y las ventas subieron 40% ese mes."</p><div class="t-auth"><div class="t-av" style="background:linear-gradient(135deg,#0057FF,#0891B2)">CP</div><div><div class="t-name">Carlos Pereira</div><div class="t-role">Director Comercial · TechRetail</div></div></div></div>
+      <div class="tc reveal d3"><div class="t-stars">★★★★★</div><p class="t-q">"Por primera vez tenemos visibilidad real del negocio. El dashboard con IA nos alertó de un problema de stock antes de que afectara las ventas."</p><div class="t-auth"><div class="t-av" style="background:linear-gradient(135deg,#16A34A,#0891B2)">AL</div><div><div class="t-name">Ana López</div><div class="t-role">CEO · Logística Express Chile</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section id="faq">
+  <div class="container">
+    <div class="sec-hd reveal">
+      <div class="eyebrow">FAQ</div>
+      <h2 class="s-title">Todo lo que necesitas saber.</h2>
+    </div>
+    <div class="faq-wrap">
+      <div class="fq"><button class="fq-q" onclick="faq(this)">¿Cuánto tiempo tarda una implementación?<span class="fq-ic">+</span></button><div class="fq-a">La mayoría de las automatizaciones están en producción en 2 a 4 semanas. Un Discovery Sprint tarda 5 días hábiles. Los proyectos Build Premium trabajan por hitos con entregables concretos cada semana.</div></div>
+      <div class="fq"><button class="fq-q" onclick="faq(this)">¿Necesito cambiar mis sistemas actuales?<span class="fq-ic">+</span></button><div class="fq-a">No. SmartConnection se integra con lo que ya tienes: SAP, Bsale, Jumpseller, SII, WhatsApp y 30+ sistemas más. Sumamos inteligencia encima de tu stack existente, sin reemplazar nada.</div></div>
+      <div class="fq"><button class="fq-q" onclick="faq(this)">¿El código me pertenece a mí o a SmartConnection?<span class="fq-ic">+</span></button><div class="fq-a">En Build Premium el 100% del código es tuyo. Tienes acceso completo al repositorio desde el primer día y no dependes de SmartConnection para operar.</div></div>
+      <div class="fq"><button class="fq-q" onclick="faq(this)">¿Qué pasa si quiero cambiar de plan?<span class="fq-ic">+</span></button><div class="fq-a">Puedes cambiar de plan en cualquier momento sin penalidad. El Discovery Sprint es el primer paso natural — desde ahí decides si vas a SaaS Start o Build Premium.</div></div>
+      <div class="fq"><button class="fq-q" onclick="faq(this)">¿Cómo se garantiza la seguridad de mis datos?<span class="fq-ic">+</span></button><div class="fq-a">Encriptación en tránsito y en reposo, autenticación JWT, sin almacenamiento de datos sensibles fuera de tu infraestructura. Para proyectos enterprise firmamos NDA.</div></div>
+      <div class="fq"><button class="fq-q" onclick="faq(this)">¿Ofrecen garantía de resultados?<span class="fq-ic">+</span></button><div class="fq-a">El Discovery Sprint incluye devolución si no quedas satisfecho. Los proyectos Build Premium tienen entregables fijos por hito — pagas solo cuando el hito se cumple correctamente.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA FINAL ═══ -->
+<section class="cta-sec" id="contacto">
+  <div class="container">
+    <h2>Tu empresa puede operar<br><span>10x más rápido.</span></h2>
+    <p>Diagnóstico gratuito de 30 minutos. Sin compromiso, sin contratos, sin letra chica.</p>
+    <div class="cta-btns">
+      <a href="https://wa.me/56912345678" class="btn-wa">💬 Escribir por WhatsApp</a>
+      <a href="mailto:hola@smconnection.cl" class="btn-blue" style="background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2)">Agendar por email →</a>
+    </div>
+    <div class="cta-tags">
+      <span>Sin contrato de exclusividad</span>
+      <span>Resultados en semanas</span>
+      <span>ROI en el primer mes</span>
+      <span>Código 100% tuyo</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="container">
+    <div class="ft-grid">
+      <div class="ft-brand"><a href="#" class="ft-logo">Smart<span>Connection</span></a><p>Automatizamos procesos, conectamos sistemas y ponemos IA a trabajar por tu empresa. Sin freelancers eternos. Resultados en semanas.</p></div>
+      <div class="ft-col"><h4>Soluciones</h4><ul><li><a href="#">Motor de IA</a></li><li><a href="#">Automatización</a></li><li><a href="#">Integraciones</a></li><li><a href="#">WhatsApp Business</a></li><li><a href="#">E-commerce</a></li></ul></div>
+      <div class="ft-col"><h4>Empresa</h4><ul><li><a href="#">Nosotros</a></li><li><a href="#">Casos de éxito</a></li><li><a href="#">Blog</a></li><li><a href="#">Trabaja con nosotros</a></li></ul></div>
+      <div class="ft-col"><h4>Soporte</h4><ul><li><a href="#">Documentación</a></li><li><a href="#">Centro de ayuda</a></li><li><a href="#">Estado del servicio</a></li><li><a href="#">Contacto</a></li></ul></div>
+      <div class="ft-col"><h4>Legal</h4><ul><li><a href="#">Términos de servicio</a></li><li><a href="#">Política de privacidad</a></li><li><a href="#">Seguridad</a></li></ul></div>
+    </div>
+    <div class="ft-bot">
+      <p>Copyright © 2026 SmartConnection SpA. Todos los derechos reservados.</p>
+      <div class="ft-bdgs"><span class="ft-bdg">🇨🇱 Chile</span><span class="ft-bdg">SOC 2</span><span class="ft-bdg">ISO 27001</span></div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/56912345678" class="wa-btn">💬</a>
+
+<script>
+// ── Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10), {passive:true});
+
+// ── Dropdown nav (GetJusto style)
+function toggleDd(id) {
+  const item = document.getElementById(id);
+  const isOpen = item.classList.contains('active');
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+  if (!isOpen) item.classList.add('active');
+}
+function closeDds() {
+  document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-item')) closeDds();
+});
+
+// ── Mobile menu
+function toggleMobile() {
+  const m = document.getElementById('mob-menu');
+  const h = document.getElementById('ham');
+  const open = m.classList.toggle('open');
+  h.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeMobile() {
+  document.getElementById('mob-menu').classList.remove('open');
+  document.getElementById('ham').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// ── FAQ
+function faq(btn) {
+  const item = btn.closest('.fq');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.fq').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ── ROI Calculator
+function roi() {
+  const e = +document.getElementById('es').value;
+  const h = +document.getElementById('hs').value;
+  const c = +document.getElementById('cs').value;
+  document.getElementById('ev').textContent = e + ' personas';
+  document.getElementById('hv').textContent = h + ' horas';
+  document.getElementById('cv').textContent = '$' + c + '/hora';
+  const hrs = e * h * 13;
+  const sav = hrs * c * 0.6;
+  const r = (sav / 3000).toFixed(1);
+  document.getElementById('sv').textContent = '$' + sav.toLocaleString('es-CL');
+  document.getElementById('ht').textContent = hrs.toLocaleString('es-CL') + ' hrs';
+  document.getElementById('rv2').textContent = r + 'x';
+}
+roi();
+
+// ── Counter animation
+function countUp(el, target, suffix) {
+  let v = 0;
+  const step = target / 55;
+  const t = setInterval(() => {
+    v = Math.min(v + step, target);
+    el.textContent = Math.floor(v) + (suffix || '');
+    if (v >= target) clearInterval(t);
+  }, 22);
+}
+
+// Hero card counters
+setTimeout(() => {
+  countUp(document.getElementById('hc1'), 320);
+  countUp(document.getElementById('hc2'), 148);
+}, 800);
+
+// Metrics counters
+const metEl = document.getElementById('m1');
+if (metEl) {
+  const metObs = new IntersectionObserver(entries => {
+    if (entries[0].isIntersecting) {
+      countUp(document.getElementById('m1'), 320);
+      countUp(document.getElementById('m2'), 40);
+      countUp(document.getElementById('m3'), 34);
+      metObs.disconnect();
+    }
+  }, { threshold: 0.6 });
+  metObs.observe(metEl.closest('.metrics-grid'));
+}
+
+// ── Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
+</body>
+</html>
