@@ -30,8 +30,9 @@ body{font-family:var(--font);color:var(--text);background:var(--w);-webkit-font-
 a{text-decoration:none;color:inherit}
 
 /* ═══ NAV GETJUSTO STYLE ═══ */
-#nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--w);border-bottom:1px solid var(--border);transition:box-shadow .25s}
-#nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.08)}
+#nav{position:fixed;top:0;left:0;right:0;z-index:200;background:var(--w);border-bottom:1px solid var(--border);transition:box-shadow .3s,transform .3s,top .3s,margin .3s,border-radius .3s,border-color .3s}
+#nav.scrolled{box-shadow:0 8px 32px rgba(0,0,0,.12);top:8px;left:50%;right:auto;transform:translateX(-50%);width:calc(100% - 48px);max-width:1200px;border-radius:16px;border-color:transparent}
+#nav.scrolled .nav-top{padding:0 20px}
 
 .nav-top{max-width:1200px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:0}
 .nav-logo{font-size:19px;font-weight:800;color:var(--text);margin-right:32px;letter-spacing:-.5px;flex-shrink:0}
@@ -399,7 +400,7 @@ footer{background:#111827;padding:52px 0 28px}
 
     <div class="nav-right">
       <a href="mailto:hola@smconnection.cl" class="nav-login">Contacto</a>
-      <a href="#contacto" class="nav-cta">Quiero tener SmartConnection</a>
+      <a href="#contacto" class="nav-cta">Haz crecer tu negocio</a>
     </div>
 
     <div class="nav-ham" id="ham" onclick="toggleMobile()">
@@ -427,7 +428,7 @@ footer{background:#111827;padding:52px 0 28px}
     <a href="#precios" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#EEF3FF">💰</div>Planes y Precios</a>
     <a href="#faq" class="mob-link" onclick="closeMobile()"><div class="mob-icon" style="background:#F3F0FF">❓</div>Preguntas frecuentes</a>
   </div>
-  <a href="#contacto" class="btn-blue" style="width:100%;justify-content:center;margin-top:8px" onclick="closeMobile()">Quiero tener SmartConnection</a>
+  <a href="#contacto" class="btn-blue" style="width:100%;justify-content:center;margin-top:8px" onclick="closeMobile()">Haz crecer tu negocio</a>
 </div>
 
 <!-- ═══════════════ HERO ═══════════════ -->
@@ -442,7 +443,7 @@ footer{background:#111827;padding:52px 0 28px}
         <h1 class="ha2">Automatiza.<br>Integra.<br><span class="hi">Escala.</span></h1>
         <p class="hero-sub ha3">Conectamos tus sistemas, automatizamos tus procesos y ponemos IA a trabajar por tu empresa. Sin freelancers eternos. Resultados en semanas.</p>
         <div class="hero-ctas ha4">
-          <a href="#contacto" class="btn-blue">Quiero tener SmartConnection →</a>
+          <a href="#contacto" class="btn-blue">Haz crecer tu negocio →</a>
           <a href="#productos" class="btn-outline">Ver soluciones</a>
         </div>
         <div class="hero-social ha5">
@@ -823,7 +824,7 @@ footer{background:#111827;padding:52px 0 28px}
 <script>
 // ── Nav scroll
 const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10), {passive:true});
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60), {passive:true});
 
 // ── Dropdown nav (GetJusto style)
 function toggleDd(id) {
