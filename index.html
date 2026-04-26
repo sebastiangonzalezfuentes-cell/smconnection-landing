@@ -335,19 +335,10 @@ section{padding:96px 0}
   overflow:hidden;
 }
 .pc:hover{transform:translateY(-7px);box-shadow:var(--shadow-lg)}
-/* Borde gradiente en hover */
-.pc::after{
-  content:'';
-  position:absolute;
-  inset:-1.5px;
-  border-radius:var(--r-xl);
-  background:var(--grad);
-  z-index:-1;
-  opacity:0;
-  transition:opacity .3s ease;
-}
-.pc:hover::after{opacity:1}
-.pc:hover{border-color:transparent}
+/* Hover limpio: solo elevación y sombra */
+.pc::after{content:none}
+.pc:hover{border-color:var(--border)}
+.pc:hover::before{opacity:0}
 /* Color accent top line */
 .pc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:var(--r-xl) var(--r-xl) 0 0;transition:opacity .25s;opacity:0}
 .pc:hover::before{opacity:1}
@@ -784,6 +775,84 @@ footer{background:#111827;padding:52px 0 28px}
   .ptable thead th,.ptable tr.feat-row td,.ptable tr.cat-row td{padding:10px 10px}
   .ptable tr.feat-row td:first-child,.ptable tr.cat-row td:first-child,.ptable thead th:first-child{padding-left:14px}
 }
+
+/* ═══ RESPONSIVE FIXES COMPLETOS ═══ */
+@media(max-width:768px){
+  .sincon-grid{grid-template-columns:1fr!important}
+  .met-val{font-size:28px}
+  .spot-item{gap:32px;padding:52px 0}
+  .ft-grid{grid-template-columns:1fr 1fr;gap:24px 20px}
+  .ft-brand{grid-column:span 2}
+}
+@media(max-width:430px){
+  .hero{padding:80px 0 48px}
+  .hero h1{font-size:clamp(32px,9vw,40px)}
+  .hero-sub{font-size:15px}
+  .hero-ctas{flex-direction:column}
+  .hero-ctas .btn-blue,.hero-ctas .btn-outline{width:100%;justify-content:center}
+  .met-val{font-size:24px}
+  .met-lbl{font-size:12px}
+  .pcard.feat{margin-top:16px}
+  .feat-tag{font-size:9px;padding:4px 12px}
+  .cta-btns{flex-direction:column;align-items:center}
+  .cta-btns .btn-blue,.cta-btns .btn-wa{width:100%;max-width:320px;justify-content:center}
+  .tgrid{gap:12px}
+  .tc{padding:20px}
+  .sincon-grid>div{padding:24px 20px!important}
+}
+@media(max-width:375px){
+  .container{padding:0 16px}
+  .hero{padding:76px 0 44px}
+  .hero h1{font-size:32px;letter-spacing:-.03em}
+  .hero-sub{font-size:14px}
+  .nav-logo{font-size:16px}
+  .metrics-grid{gap:12px}
+  .met-val{font-size:22px}
+  .met-lbl{font-size:11px}
+  .pc{padding:20px 16px}
+  .pc h3{font-size:15px}
+  .pcard{padding:22px 16px 18px}
+  .ptitle{font-size:17px}
+  .pamt{font-size:26px}
+  .roi-card h2{font-size:22px}
+  .rv{font-size:18px}
+  .fq-q{font-size:13px;padding:13px 15px}
+  .ft-grid{grid-template-columns:1fr;gap:18px}
+  .ft-brand{grid-column:auto}
+  .ft-bot{flex-direction:column;align-items:flex-start;gap:8px}
+}
+
+/* ═══ SOLUTION MODAL ═══ */
+.sol-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.sol-overlay.open{opacity:1;pointer-events:auto}
+.sol-panel{background:#fff;border-radius:24px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.22);position:relative;transform:scale(.95);opacity:0;transition:transform .28s cubic-bezier(.34,1.56,.64,1),opacity .22s ease;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.sol-panel::-webkit-scrollbar{width:4px}
+.sol-panel::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.sol-overlay.open .sol-panel{transform:scale(1);opacity:1}
+.sol-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:var(--off);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--sub);transition:background .15s,color .15s;z-index:2;line-height:1}
+.sol-close:hover{background:var(--border);color:var(--text)}
+.sol-close:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+.sol-header{padding:32px 28px 24px;border-bottom:1px solid var(--border)}
+.sol-header-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:0}
+.sol-icon{width:60px;height:60px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.sol-meta{flex:1;min-width:0}
+.sol-category{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--blue-soft);color:var(--blue);margin-bottom:6px}
+.sol-title{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.025em;line-height:1.1}
+.sol-body{padding:24px 28px}
+.sol-desc{font-size:14px;color:var(--sub);line-height:1.75;margin-bottom:20px}
+.sol-features-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--light);margin-bottom:12px}
+.sol-features{list-style:none;display:flex;flex-direction:column;gap:9px}
+.sol-features li{font-size:14px;color:var(--mid);display:flex;align-items:flex-start;gap:10px;line-height:1.5}
+.sol-fck{width:20px;height:20px;min-width:20px;border-radius:50%;background:var(--blue-soft);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:var(--blue);margin-top:1px}
+.sol-footer{padding:20px 28px 28px;border-top:1px solid var(--border)}
+.sol-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px 24px;background:var(--blue);color:#fff;border-radius:980px;font-size:15px;font-weight:700;text-decoration:none;letter-spacing:-.01em;transition:background .2s,transform .18s cubic-bezier(.34,1.56,.64,1),box-shadow .2s;min-height:52px}
+.sol-cta:hover{background:var(--blue-h);transform:translateY(-2px) scale(1.01);box-shadow:0 8px 28px rgba(0,87,255,.38)}
+@media(max-width:640px){
+  .sol-overlay{align-items:flex-end;padding:0}
+  .sol-panel{max-width:100%;max-height:92vh;border-radius:20px 20px 0 0;transform:translateY(32px) scale(1);opacity:0}
+  .sol-overlay.open .sol-panel{transform:translateY(0) scale(1);opacity:1}
+}
+@media(prefers-reduced-motion:reduce){.sol-overlay,.sol-panel{transition:none}}
 </style>
 </head>
 <body>
@@ -1173,7 +1242,7 @@ footer{background:#111827;padding:52px 0 28px}
       <h2 class="s-title">¿Qué pasa cuando tu empresa<br>no automatiza?</h2>
       <p class="s-desc" style="margin:0 auto">El mismo negocio. Resultados completamente distintos.</p>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:880px;margin:0 auto">
+    <div class="sincon-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:880px;margin:0 auto">
       <div class="reveal d1" style="background:var(--red-soft);border:1.5px solid rgba(220,38,38,.12);border-radius:var(--r-xl);padding:32px 28px">
         <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px;padding-bottom:18px;border-bottom:1.5px solid rgba(0,0,0,.06)">
           <div style="width:32px;height:32px;border-radius:50%;background:var(--red-soft);border:1.5px solid rgba(220,38,38,.2);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--red);flex-shrink:0">✗</div>
@@ -1553,7 +1622,7 @@ footer{background:#111827;padding:52px 0 28px}
       <p>Ajusta los valores según tu empresa y ve el impacto estimado en 90 días.</p>
       <div class="slg"><div class="sll"><span>Empleados en tareas manuales</span><span class="slv" id="ev">5 personas</span></div><input type="range" min="1" max="50" value="5" id="es" oninput="roi()"></div>
       <div class="slg"><div class="sll"><span>Horas manuales por semana</span><span class="slv" id="hv">20 horas</span></div><input type="range" min="5" max="160" value="20" id="hs" oninput="roi()"></div>
-      <div class="slg"><div class="sll"><span>Costo hora promedio (USD)</span><span class="slv" id="cv">$15/hora</span></div><input type="range" min="5" max="100" value="15" id="cs" oninput="roi()"></div>
+      <div class="slg"><div class="sll"><span>Costo hora promedio (CLP)</span><span class="slv" id="cv">$15.000 CLP/hora</span></div><input type="range" min="3000" max="50000" step="1000" value="15000" id="cs" oninput="roi()"></div>
       <div class="roi-res">
         <div><div class="rv" id="sv">$11,700</div><div class="rl">Ahorro en 90 días</div></div>
         <div><div class="rv" id="ht">1,800 hrs</div><div class="rl">Horas recuperadas</div></div>
@@ -1767,17 +1836,17 @@ function faq(btn) {
   if (!isOpen) item.classList.add('open');
 }
 
-// ── ROI Calculator
+// ── ROI Calculator (en CLP)
 function roi() {
   const e = +document.getElementById('es').value;
   const h = +document.getElementById('hs').value;
   const c = +document.getElementById('cs').value;
   document.getElementById('ev').textContent = e + ' personas';
   document.getElementById('hv').textContent = h + ' horas';
-  document.getElementById('cv').textContent = '$' + c + '/hora';
+  document.getElementById('cv').textContent = '$' + c.toLocaleString('es-CL') + ' CLP/hora';
   const hrs = e * h * 13;
-  const sav = hrs * c * 0.6;
-  const r = (sav / 3000).toFixed(1);
+  const sav = Math.round(hrs * c * 0.6);
+  const r = (sav / 1500000).toFixed(1);
   document.getElementById('sv').textContent = '$' + sav.toLocaleString('es-CL');
   document.getElementById('ht').textContent = hrs.toLocaleString('es-CL') + ' hrs';
   document.getElementById('rv2').textContent = r + 'x';
@@ -1844,6 +1913,79 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (el) ddObs.observe(el);
   });
 })();
+
+// ── Solution Modal
+const solutions = {
+  'motor-ia':{icon:'🤖',iconBg:'#EEF3FF',category:'Motor de IA',catStyle:'background:#EEF3FF;color:#0057FF',title:'Motor de IA',desc:'Agentes inteligentes entrenados con la información de tu negocio. Responden consultas, analizan datos y ejecutan acciones las 24 horas del día sin supervisión humana.',features:['Agentes con memoria persistente de contexto conversacional','Integración nativa con GPT-4 y Claude AI de Anthropic','Entrenamiento con tu documentación, productos y base de conocimiento','Escalada automática a agentes humanos cuando se requiere','Trazabilidad completa de cada decisión y acción del agente','Panel de monitoreo en tiempo real con métricas de rendimiento']},
+  'automatizacion':{icon:'⚡',iconBg:'#F3F0FF',category:'Automatización',catStyle:'background:#F3F0FF;color:#7C3AED',title:'Automatización de Procesos',desc:'Flujos de trabajo que reemplazan tareas repetitivas de principio a fin. Desde la recepción de un pedido hasta su facturación — todo ocurre automáticamente.',features:['Constructor de flujos visual drag & drop sin código','Triggers por evento, horario, condición o API','Manejo de errores con reintentos automáticos y notificaciones','Historial completo de ejecuciones con logs detallados','Ramas condicionales para manejar distintos escenarios','Integración con 34+ sistemas para acciones cross-plataforma']},
+  'integracion':{icon:'🔗',iconBg:'#DCFCE7',category:'Integraciones',catStyle:'background:#DCFCE7;color:#16A34A',title:'Integración de Sistemas',desc:'Conecta todos tus sistemas en un ecosistema unificado que sincroniza datos en tiempo real. No más copiar y pegar entre plataformas.',features:['34+ integraciones nativas: SAP, Bsale, Jumpseller, Shopify, HubSpot','Sincronización bidireccional en tiempo real entre todos los sistemas','API propia para integraciones con cualquier sistema personalizado','Transformación y mapeo de datos entre formatos distintos','Monitoreo de estado de cada integración con alertas automáticas','Sin pérdida ni duplicación de datos entre sistemas']},
+  'whatsapp':{icon:'💬',iconBg:'#E0F7FA',category:'WhatsApp Business',catStyle:'background:#E0F7FA;color:#0891B2',title:'WhatsApp Business',desc:'Tu canal de ventas y soporte más eficiente operando de forma completamente automatizada. Responde consultas, procesa pedidos y fideliza clientes desde WhatsApp.',features:['Respuestas automáticas con Motor de IA entrenado en tu catálogo','Procesamiento de pedidos directo desde la conversación','Seguimiento de despacho y notificaciones automáticas al cliente','Campañas masivas de difusión segmentadas por perfil','Integración directa con Bsale, Shopify y tu sistema de stock','Panel unificado de todas las conversaciones con métricas en tiempo real']},
+  'ecommerce':{icon:'🛒',iconBg:'#FFF1E8',category:'E-commerce',catStyle:'background:#FFF1E8;color:#EA580C',title:'E-commerce Inteligente',desc:'Tienda online potenciada con IA que personaliza la experiencia de cada cliente, gestiona el stock en tiempo real y automatiza desde el checkout hasta la facturación.',features:['Recomendaciones personalizadas con IA en tiempo real','Sincronización de stock con SAP, Bsale y bodega','Checkout automatizado con factura electrónica SII incluida','Integración con Shopify, Jumpseller y plataformas propias','Recuperación automática de carritos abandonados por WhatsApp','Analytics de conversión con detección automática de oportunidades']},
+  'panel':{icon:'📊',iconBg:'#F3F0FF',category:'Panel de Control',catStyle:'background:#F3F0FF;color:#7C3AED',title:'Panel de Control',desc:'Gestión centralizada de ventas, operaciones, automatizaciones y métricas en un solo lugar. Datos en tiempo real y alertas automáticas desde cualquier dispositivo.',features:['Vista unificada de todos tus sistemas y automatizaciones activas','KPIs de negocio actualizados en tiempo real con tendencias','Alertas automáticas ante anomalías o caídas en el servicio','Gestión de usuarios con roles y permisos granulares','Reportes exportables en PDF, Excel y Google Sheets','Acceso móvil optimizado para gestionar desde cualquier lugar']},
+  'marketing':{icon:'📣',iconBg:'#FEF2F2',category:'Marketing',catStyle:'background:#FEF2F2;color:#DC2626',title:'Marketing Automation',desc:'Campañas de email, SMS y WhatsApp que se ejecutan solas para siempre, adaptándose al comportamiento de cada cliente para maximizar la conversión.',features:['Flujos de nurturing automáticos por comportamiento del cliente','Segmentación dinámica por compras, visitas e interacciones','A/B testing automático con selección del ganador por IA','Campañas multicanal: email, WhatsApp y SMS desde un lugar','Recuperación automática de clientes inactivos con ofertas personalizadas','Reportes de rendimiento con atribución de conversión por canal']},
+  'analytics':{icon:'📈',iconBg:'#E0F7FA',category:'Analytics',catStyle:'background:#E0F7FA;color:#0891B2',title:'Analytics & Reportes',desc:'Dashboards con IA que detectan automáticamente patrones, anomalías y oportunidades de mejora, presentándolas con contexto accionable.',features:['Detección automática de anomalías y alertas en tiempo real','Identificación de los 3 cuellos de botella con mayor impacto económico','Predicciones de demanda y stock con modelos de IA','Comparativas automáticas contra períodos anteriores','Dashboards personalizables por área: ventas, operaciones, soporte','Exportación y programación de reportes automáticos al equipo']},
+  'crm':{icon:'⭐',iconBg:'#FFFBEB',category:'CRM & Loyalty',catStyle:'background:#FFFBEB;color:#D97706',title:'CRM & Loyalty',desc:'Fidelización completamente automatizada. Puntos, recompensas, segmentación y retención de clientes que operan solos con resultados medibles desde la primera semana.',features:['Programa de puntos y recompensas configurado en minutos','Segmentación automática por valor, frecuencia y recencia','Campañas de retención disparadas ante señales de churn','Historial completo de cada cliente: compras, interacciones y preferencias','Integración con WhatsApp para comunicaciones personalizadas','Métricas de LTV, churn rate y NPS actualizadas en tiempo real']},
+  'logistica':{icon:'🚚',iconBg:'#FFF7ED',category:'Logística',catStyle:'background:#FFF7ED;color:#EA580C',title:'Logística Inteligente',desc:'Seguimiento de pedidos en tiempo real, rutas optimizadas con IA y sincronización automática con operadores logísticos. Tu cliente siempre informado.',features:['Tracking en tiempo real con notificaciones automáticas al cliente','Optimización de rutas de despacho con IA para reducir costos','Integración con Starken, Chilexpress, Blue Express y propios','Gestión automatizada de devoluciones y cambios de pedido','Alertas de demoras con comunicación proactiva vía WhatsApp','Reportes de eficiencia logística con KPIs de entrega y satisfacción']},
+  'facturacion':{icon:'🧾',iconBg:'#FEF2F2',category:'Facturación SII',catStyle:'background:#FEF2F2;color:#DC2626',title:'Facturación SII',desc:'Emisión automática de DTE, boletas y facturas electrónicas sin intervención humana. Cero errores tributarios y cumplimiento total con la normativa del SII.',features:['Emisión automática de facturas, boletas y notas de crédito DTE','Sincronización en tiempo real con el SII sin proceso manual','Integración con Bsale, SAP y tu sistema de ventas actual','Manejo automático de rechazos del SII con reenvío automático','Conciliación automática entre ventas, facturas y cobros','Reportes tributarios mensuales listos para el contador']},
+  'soporte':{icon:'🛡️',iconBg:'#DCFCE7',category:'Soporte 24/7',catStyle:'background:#DCFCE7;color:#16A34A',title:'Soporte 24/7',desc:'Motor de IA entrenado con el conocimiento de tu empresa que responde consultas a cualquier hora, escala casos complejos y registra cada interacción.',features:['Disponibilidad 24/7 sin costo adicional por turno o guardia','Entrenamiento con manuales, FAQs y base de conocimiento propia','Escalada inteligente a humanos con resumen del contexto al agente','Respuestas en WhatsApp, email y chat web desde un solo sistema','Aprendizaje continuo a partir de resoluciones del equipo humano','CSAT y métricas de resolución en tiempo real en el Panel']}
+};
+const cardKeys=['motor-ia','automatizacion','integracion','whatsapp','ecommerce','panel','marketing','analytics','crm','logistica','facturacion','soporte'];
+document.querySelectorAll('.pc').forEach((card,i)=>{
+  const key=cardKeys[i]; if(!key)return;
+  const btn=card.querySelector('.link-btn'); if(!btn)return;
+  btn.dataset.solKey=key; btn.style.cursor='pointer';
+  btn.setAttribute('role','button'); btn.setAttribute('tabindex','0');
+  btn.addEventListener('click',()=>openSolModal(key));
+  btn.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openSolModal(key);}});
+});
+function openSolModal(key){
+  const sol=solutions[key]; if(!sol)return;
+  document.getElementById('solIcon').textContent=sol.icon;
+  document.getElementById('solIcon').style.background=sol.iconBg;
+  document.getElementById('solCategory').textContent=sol.category;
+  document.getElementById('solCategory').setAttribute('style',sol.catStyle+';display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px');
+  document.getElementById('solTitle').textContent=sol.title;
+  document.getElementById('solDesc').textContent=sol.desc;
+  document.getElementById('solFeatures').innerHTML=sol.features.map(f=>`<li><span class="sol-fck" aria-hidden="true">✓</span>${f}</li>`).join('');
+  const overlay=document.getElementById('solOverlay');
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>document.querySelector('.sol-close').focus(),50);
+}
+function closeSolModal(event){
+  if(event&&event.target.closest&&event.target.closest('#solPanel'))return;
+  document.getElementById('solOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    if(document.getElementById('solOverlay').classList.contains('open'))closeSolModal();
+  }
+});
 </script>
+
+<!-- ═══ SOLUTION MODAL ═══ -->
+<div class="sol-overlay" id="solOverlay" role="dialog" aria-modal="true" aria-labelledby="solTitle" onclick="closeSolModal(event)">
+  <div class="sol-panel" id="solPanel">
+    <button class="sol-close" onclick="closeSolModal()" aria-label="Cerrar">&#x2715;</button>
+    <div class="sol-header">
+      <div class="sol-header-top">
+        <div class="sol-icon" id="solIcon"></div>
+        <div class="sol-meta">
+          <div class="sol-category" id="solCategory"></div>
+          <div class="sol-title" id="solTitle"></div>
+        </div>
+      </div>
+    </div>
+    <div class="sol-body">
+      <p class="sol-desc" id="solDesc"></p>
+      <div class="sol-features-title">Lo que incluye</div>
+      <ul class="sol-features" id="solFeatures"></ul>
+    </div>
+    <div class="sol-footer">
+      <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="sol-cta">💬 Quiero esta solución →</a>
+    </div>
+  </div>
+</div>
 </body>
 </html>
