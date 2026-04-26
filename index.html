@@ -192,18 +192,18 @@ a{text-decoration:none;color:inherit}
 .mob-backdrop.open{opacity:1;pointer-events:auto}
 .mobile-menu{position:fixed;top:56px;left:0;right:0;bottom:0;background:var(--w);z-index:199;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 0 48px;border-top:1px solid var(--border);opacity:0;transform:translateY(-12px);pointer-events:none;visibility:hidden;transition:opacity 280ms cubic-bezier(.16,1,.3,1),transform 280ms cubic-bezier(.16,1,.3,1),visibility 0ms linear 280ms}
 .mobile-menu.open{opacity:1;transform:translateY(0);pointer-events:auto;visibility:visible;transition:opacity 280ms cubic-bezier(.16,1,.3,1),transform 280ms cubic-bezier(.16,1,.3,1),visibility 0ms linear 0ms}
-.mob-section{padding:20px 20px 0}
-.mob-section+.mob-section{border-top:1px solid var(--border);margin-top:4px}
-.mob-section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--light);margin-bottom:8px;padding-top:4px}
-.mob-link{display:flex;align-items:center;gap:13px;padding:10px 12px;border-radius:12px;text-decoration:none;color:var(--text);margin:0 -12px;min-height:44px;transition:background 160ms ease}
+.mob-section{padding:10px 20px 0}
+.mob-section+.mob-section{border-top:1px solid var(--border);margin-top:2px}
+.mob-section-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--light);margin-bottom:4px;padding-top:2px}
+.mob-link{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:10px;text-decoration:none;color:var(--text);margin:0 -10px;min-height:40px;transition:background 160ms ease}
 .mob-link:hover,.mob-link:active{background:var(--gray)}
-.mob-icon{width:40px;height:40px;min-width:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.mob-link-text{display:flex;flex-direction:column;gap:2px;min-width:0}
-.mob-link-title{font-size:15px;font-weight:600;color:var(--text);line-height:1.25;letter-spacing:-.01em}
-.mob-link-desc{font-size:12px;color:var(--sub);line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.mob-section-links{padding:12px 20px 0;display:flex;flex-direction:column;border-top:1px solid var(--border);margin-top:4px}
-.mob-cta-wrap{padding:20px 20px 0;margin-top:4px;border-top:1px solid var(--border)}
-.mob-cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px 24px;background:var(--green);color:#fff;font-size:16px;font-weight:600;letter-spacing:-.01em;border-radius:14px;text-decoration:none;min-height:54px;transition:background 160ms ease,transform 120ms ease;-webkit-tap-highlight-color:transparent}
+.mob-icon{width:34px;height:34px;min-width:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mob-link-text{display:flex;flex-direction:column;gap:0;min-width:0}
+.mob-link-title{font-size:14px;font-weight:600;color:var(--text);line-height:1.25;letter-spacing:-.01em}
+.mob-link-desc{display:none}
+.mob-section-links{padding:8px 20px 0;display:flex;flex-direction:column;border-top:1px solid var(--border);margin-top:2px}
+.mob-cta-wrap{padding:12px 20px 0;margin-top:2px;border-top:1px solid var(--border)}
+.mob-cta{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px 20px;background:var(--green);color:#fff;font-size:15px;font-weight:600;letter-spacing:-.01em;border-radius:12px;text-decoration:none;min-height:48px;transition:background 160ms ease,transform 120ms ease;-webkit-tap-highlight-color:transparent}
 .mob-cta:hover{background:#15803D}
 .mob-cta:active{transform:scale(.98);background:#14532D}
 @media(prefers-reduced-motion:reduce){.mobile-menu,.mob-backdrop,.mob-link,.mob-cta{transition:none}}
@@ -406,7 +406,7 @@ section{padding:96px 0}
 .price-sec{background:var(--off)}
 
 /* ── Cards superiores ── */
-.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;align-items:stretch}
 .pcard{
   background:var(--w);
   border:1.5px solid var(--border);
@@ -741,9 +741,11 @@ footer{background:#111827;padding:52px 0 28px}
 
 
 /* ═══ RESPONSIVE ═══ */
+@media(max-width:1200px){
+  .pgrid{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:1024px){
   .prod-grid{grid-template-columns:repeat(2,1fr)}
-  .pgrid{grid-template-columns:repeat(2,1fr)}
   .int-grid{grid-template-columns:repeat(4,1fr)}
   .ft-grid{grid-template-columns:1fr 1fr}
   .hero-inner{gap:36px}
@@ -1249,81 +1251,87 @@ footer{background:#111827;padding:52px 0 28px}
     <!-- ── Cards superiores (3 columnas) ── -->
     <div class="pgrid">
 
-      <!-- Plan Explora -->
+      <!-- Plan Discovery Sprint -->
       <div class="pcard reveal d1">
-        <div class="pn">Diagnóstico primero</div>
-        <div class="ptitle">Explora</div>
+        <div class="pn">Comenzar</div>
+        <div class="ptitle">Discovery &amp; Design Sprint</div>
         <div class="price-block">
-          <div class="pamt">
-            19<span class="pamt-uf">UF</span><span class="pamt-ivá">+IVA</span>
-          </div>
+          <div class="pamt">Desde 19<span class="pamt-uf">UF</span><span class="pamt-ivá">+IVA</span></div>
           <div class="punit">Pago único &middot; 1 semana</div>
         </div>
-        <p class="pdesc">Entiende exactamente qué automatizar antes de invertir un peso. Con un plan técnico real en mano.</p>
+        <p class="pdesc">Diagnóstico completo y plan técnico real antes de comprometerte con nada.</p>
         <ul class="pfeat">
-          <li><span class="pck">✓</span>Sprint de discovery 5 días hábiles</li>
-          <li><span class="pck">✓</span>Mapa completo de procesos actuales</li>
-          <li><span class="pck">✓</span>3 flujos con mayor ROI identificados</li>
-          <li><span class="pck">✓</span>Propuesta técnica con presupuesto real</li>
-          <li><span class="pck">✓</span>Sesión de presentación con tu equipo</li>
+          <li><span class="pck">✓</span>Mapeo de procesos actuales</li>
+          <li><span class="pck">✓</span>Diagnóstico de cuellos de botella</li>
+          <li><span class="pck">✓</span>Plan de solución con alternativas y presupuesto</li>
+          <li><span class="pck">✓</span>Entregables en 1 semana</li>
+          <li><span class="pck">✓</span>Sin compromiso de continuidad</li>
           <li><span class="pck-no">—</span><span style="color:var(--light)">Implementación incluida</span></li>
           <li><span class="pck-no">—</span><span style="color:var(--light)">Soporte post-entrega</span></li>
         </ul>
-        <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="btn-plan bpo">
-          Empezar con Explora &rarr;
-        </a>
+        <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="btn-plan bpo">Agendar Sprint →</a>
       </div>
 
-      <!-- Plan Automatiza (destacado) -->
-      <div class="pcard feat reveal d2">
-        <div class="feat-tag">MAS ELEGIDO</div>
-        <div class="pn">Implementación</div>
-        <div class="ptitle">Automatiza</div>
+      <!-- SaaS Start -->
+      <div class="pcard reveal d2">
+        <div class="pn">Escalar rápido</div>
+        <div class="ptitle">SaaS Start</div>
         <div class="price-block">
-          <div class="pamt">
-            <span style="font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--sub);margin-right:2px">Desde</span>50<span class="pamt-uf">UF</span><span class="pamt-ivá">+IVA</span>
-          </div>
-          <div class="punit">Por proyecto &middot; Precio fijo por hito</div>
+          <div class="pamt" style="font-size:22px;padding-top:6px">Próximamente</div>
+          <div class="punit">Suscripción mensual</div>
         </div>
-        <p class="pdesc">Software funcionable. Código 100% tuyo. Resultados medibles en semanas, no en meses.</p>
+        <p class="pdesc">Plataforma lista desde el día uno. Resultados visibles en la primera semana.</p>
         <ul class="pfeat">
-          <li><span class="pck">✓</span>Todo lo del plan Explora</li>
-          <li><span class="pck">✓</span>Hasta 3 automatizaciones core</li>
-          <li><span class="pck">✓</span>Deploy en producción incluido</li>
-          <li><span class="pck">✓</span>Hasta 5 integraciones activas</li>
-          <li><span class="pck">✓</span>Motor de IA conectado a tus datos</li>
-          <li><span class="pck">✓</span>Capacitación del equipo</li>
-          <li><span class="pck">✓</span>3 meses de soporte + canal dedicado</li>
+          <li><span class="pck">✓</span>Quick wins en la primera semana</li>
+          <li><span class="pck">✓</span>Sin inversión inicial en desarrollo</li>
+          <li><span class="pck">✓</span>Integraciones con tus sistemas actuales</li>
+          <li><span class="pck">✓</span>Soporte y actualizaciones incluidas</li>
+          <li><span class="pck">✓</span>Escala a Build Premium cuando quieras</li>
         </ul>
-        <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="btn-plan bpf">
-          Quiero implementar &rarr;
-        </a>
+        <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="btn-plan bpo">Notificarme →</a>
       </div>
 
-      <!-- Plan Transforma -->
-      <div class="pcard reveal d3">
-        <div class="pn">Transformación total</div>
-        <div class="ptitle">Transforma</div>
+      <!-- Build Premium (destacado) -->
+      <div class="pcard feat reveal d3">
+        <div class="feat-tag">⭐ MÁS ELEGIDO</div>
+        <div class="pn">Construir</div>
+        <div class="ptitle">Build Premium</div>
         <div class="price-block">
-          <div class="pamt">
-            <span style="font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--sub);margin-right:2px">Desde</span>200<span class="pamt-uf">UF</span><span class="pamt-ivá">+IVA</span>
-          </div>
+          <div class="pamt">50 – 750<span class="pamt-uf">UF</span><span class="pamt-ivá">+IVA</span></div>
+          <div class="punit">Por proyecto &middot; Precio fijo por hitos</div>
+        </div>
+        <p class="pdesc">Software funcionable. Código 100% tuyo. Sin dependencia de SmartConnection para operar.</p>
+        <ul class="pfeat">
+          <li><span class="pck">✓</span>Software funcionando (no mockups)</li>
+          <li><span class="pck">✓</span>Código 100% tuyo con acceso al repo</li>
+          <li><span class="pck">✓</span>Entrega por hitos con precio fijo</li>
+          <li><span class="pck">✓</span>Capacitación al equipo incluida</li>
+          <li><span class="pck">✓</span>Deploy en producción incluido</li>
+          <li><span class="pck">✓</span>Sin dependencia de SMC para operar</li>
+        </ul>
+        <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="btn-plan bpf">Quiero implementar →</a>
+      </div>
+
+      <!-- Project + Support -->
+      <div class="pcard reveal d4">
+        <div class="pn">Crecer juntos</div>
+        <div class="ptitle">Project + Support</div>
+        <div class="price-block">
+          <div class="pamt" style="font-size:22px;padding-top:6px">A medida</div>
           <div class="punit">Semestral &sol; Anual &middot; SLA garantizado</div>
         </div>
-        <p class="pdesc">Automatización completa de tu operación. Soporte permanente, agentes de IA y monitoreo continuo.</p>
+        <p class="pdesc">Todo lo de Build Premium más monitoreo 24/7, ajustes continuos y equipo dedicado.</p>
         <ul class="pfeat">
-          <li><span class="pck">✓</span>Todo lo del plan Automatiza</li>
-          <li><span class="pck">✓</span>Automatizaciones ilimitadas</li>
-          <li><span class="pck">✓</span>34+ integraciones disponibles</li>
-          <li><span class="pck">✓</span>Agentes de IA con memoria persistente</li>
-          <li><span class="pck">✓</span>WhatsApp Business &middot; Facturación SII</li>
-          <li><span class="pck">✓</span>Soporte 24/7 con SLA garantizado</li>
-          <li><span class="pck">✓</span>Reuniones de revisión mensuales</li>
+          <li><span class="pck">✓</span>Todo lo de Build Premium</li>
+          <li><span class="pck">✓</span>Monitoreo activo 24/7</li>
+          <li><span class="pck">✓</span>Ajustes y mejoras continuas</li>
+          <li><span class="pck">✓</span>SLA con tiempos de respuesta garantizados</li>
+          <li><span class="pck">✓</span>Canal dedicado de acceso al equipo</li>
+          <li><span class="pck">✓</span>Reportes mensuales de rendimiento</li>
         </ul>
-        <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="btn-plan bpg">
-          Hablemos de tu proyecto &rarr;
-        </a>
+        <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="btn-plan bpg">Hablemos →</a>
       </div>
+
     </div><!-- /pgrid -->
 
     <!-- ── Tabla comparativa ── -->
@@ -1332,10 +1340,11 @@ footer{background:#111827;padding:52px 0 28px}
         <table class="ptable" role="table" aria-label="Comparativa de planes SmartConnection">
           <thead>
             <tr>
-              <th scope="col" style="width:36%">Funcionalidad</th>
-              <th scope="col" style="width:21%">Explora</th>
-              <th scope="col" class="th-feat" style="width:21%">Automatiza</th>
-              <th scope="col" style="width:22%">Transforma</th>
+              <th scope="col" style="width:30%">Funcionalidad</th>
+              <th scope="col" style="width:17%">Discovery Sprint</th>
+              <th scope="col" style="width:17%">SaaS Start</th>
+              <th scope="col" class="th-feat" style="width:18%">Build Premium</th>
+              <th scope="col" style="width:18%">Project + Support</th>
             </tr>
           </thead>
           <tbody>
