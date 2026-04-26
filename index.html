@@ -402,33 +402,199 @@ section{padding:96px 0}
 .chip:hover{transform:translateY(-5px) scale(1.05);border-color:var(--blue);color:var(--blue);box-shadow:0 8px 20px rgba(0,87,255,.13)}
 .ci{font-size:21px;margin-bottom:5px}
 
-/* ═══ PRICING ═══ */
+/* ═══ PRICING (GetJusto style) ═══ */
 .price-sec{background:var(--off)}
-.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start}
-.pcard{background:var(--w);border:1.5px solid var(--border);border-radius:var(--r-xl);padding:28px;transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s}
-.pcard:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
-.pcard.feat{background:linear-gradient(145deg,#0057FF 0%,#003FBB 100%);border-color:transparent;position:relative;margin-top:-10px}
-.feat-tag{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#F59E0B,#EF4444);color:#fff;font-size:10px;font-weight:800;padding:4px 14px;border-radius:20px;white-space:nowrap;letter-spacing:.02em}
-.pn{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--light);margin-bottom:5px}
-.pcard.feat .pn{color:rgba(255,255,255,.5)}
-.ptitle{font-size:19px;font-weight:800;color:var(--text);margin-bottom:8px;letter-spacing:-.01em}
-.pcard.feat .ptitle{color:#fff}
-.pamt{font-size:30px;font-weight:800;color:var(--text);letter-spacing:-.02em;line-height:1}
-.pcard.feat .pamt{color:#fff}
-.punit{font-size:11px;color:var(--sub);margin-top:3px;margin-bottom:18px}
-.pcard.feat .punit{color:rgba(255,255,255,.55)}
-.pdesc{font-size:12px;color:var(--sub);line-height:1.65;margin-bottom:18px;padding-bottom:16px;border-bottom:1px solid var(--border)}
-.pcard.feat .pdesc{color:rgba(255,255,255,.65);border-color:rgba(255,255,255,.15)}
-.pfeat{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.pfeat li{font-size:12px;color:var(--sub);display:flex;align-items:flex-start;gap:7px}
-.pcard.feat .pfeat li{color:rgba(255,255,255,.75)}
-.pck{color:var(--blue);flex-shrink:0;font-size:12px;margin-top:1px}
-.pcard.feat .pck{color:rgba(255,255,255,.9)}
-.btn-plan{display:block;text-align:center;padding:11px;border-radius:980px;font-size:13px;font-weight:700;transition:all .2s}
+
+/* ── Cards superiores ── */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.pcard{
+  background:var(--w);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-xl);
+  padding:28px 26px 24px;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,border-color .2s;
+}
+.pcard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg)}
+
+/* Plan destacado — borde azul + sombra */
+.pcard.feat{
+  border-color:var(--blue);
+  border-width:2px;
+  box-shadow:0 0 0 4px rgba(0,87,255,.07),var(--shadow);
+}
+.pcard.feat:hover{box-shadow:0 0 0 4px rgba(0,87,255,.1),var(--shadow-lg)}
+
+/* Badge */
+.feat-tag{
+  position:absolute;
+  top:-13px;
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--blue);
+  color:#fff;
+  font-size:10px;
+  font-weight:800;
+  padding:4px 14px;
+  border-radius:20px;
+  white-space:nowrap;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  box-shadow:0 4px 12px rgba(0,87,255,.35);
+}
+
+/* Cabecera del card */
+.pn{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--light);margin-bottom:6px}
+.ptitle{font-size:22px;font-weight:800;color:var(--text);margin-bottom:14px;letter-spacing:-.02em}
+.pcard.feat .ptitle{color:var(--blue)}
+
+/* Bloque de precio */
+.price-block{margin-bottom:10px}
+.pamt{font-size:36px;font-weight:800;color:var(--text);letter-spacing:-.03em;line-height:1;display:flex;align-items:baseline;gap:6px}
+.pamt-uf{font-size:16px;font-weight:700;color:var(--sub)}
+.pamt-ivá{font-size:13px;font-weight:500;color:var(--light);margin-left:2px}
+.pcard.feat .pamt{color:var(--blue)}
+.punit{font-size:11.5px;color:var(--sub);margin-top:5px;margin-bottom:16px;line-height:1.4}
+
+/* Descripción */
+.pdesc{
+  font-size:13px;
+  color:var(--sub);
+  line-height:1.6;
+  margin-bottom:20px;
+  padding-bottom:18px;
+  border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+
+/* Lista de features (dentro del card — versión compacta) */
+.pfeat{list-style:none;display:flex;flex-direction:column;gap:7px;margin-bottom:22px;flex:1}
+.pfeat li{font-size:12.5px;color:var(--mid);display:flex;align-items:flex-start;gap:8px;line-height:1.45}
+.pck{color:var(--green);flex-shrink:0;font-size:13px;font-weight:700;margin-top:1px}
+.pck-no{color:var(--light);flex-shrink:0;font-size:13px;margin-top:1px}
+
+/* CTAs */
+.btn-plan{
+  display:block;
+  text-align:center;
+  padding:12px 16px;
+  border-radius:980px;
+  font-size:13.5px;
+  font-weight:700;
+  transition:all .22s cubic-bezier(.34,1.56,.64,1);
+  margin-top:auto;
+  letter-spacing:-.01em;
+  min-height:44px;
+  line-height:20px;
+}
 .bpo{background:var(--blue-soft);color:var(--blue)}
-.bpo:hover{background:var(--blue);color:#fff;transform:scale(1.02)}
-.bpw{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.25)}
-.bpw:hover{background:rgba(255,255,255,.25);transform:scale(1.02)}
+.bpo:hover{background:var(--blue);color:#fff;transform:scale(1.02);box-shadow:0 6px 20px rgba(0,87,255,.3)}
+.bpf{background:var(--blue);color:#fff;box-shadow:0 4px 16px rgba(0,87,255,.28)}
+.bpf:hover{background:var(--blue-h);transform:scale(1.02);box-shadow:0 8px 28px rgba(0,87,255,.4)}
+.bpg{background:var(--off);color:var(--mid);border:1.5px solid var(--border)}
+.bpg:hover{background:var(--border);color:var(--text);transform:scale(1.02)}
+.btn-plan:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
+
+/* ── Tabla comparativa ── */
+.ptable-wrap{margin-top:40px;border:1.5px solid var(--border);border-radius:var(--r-xl);overflow:hidden;background:var(--w)}
+.ptable{width:100%;border-collapse:collapse}
+
+/* Sticky header */
+.ptable thead th{
+  position:sticky;
+  top:0;
+  background:var(--w);
+  z-index:10;
+  padding:18px 14px 14px;
+  font-size:13px;
+  font-weight:700;
+  color:var(--text);
+  text-align:center;
+  border-bottom:1.5px solid var(--border);
+  white-space:nowrap;
+}
+.ptable thead th:first-child{text-align:left;padding-left:20px;color:var(--sub);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.ptable thead th.th-feat{color:var(--blue);border-bottom-color:var(--blue)}
+
+/* Filas de categoría */
+.ptable tr.cat-row td{
+  background:var(--off);
+  padding:10px 14px 8px;
+  font-size:10.5px;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--sub);
+  border-top:1.5px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.ptable tr.cat-row td:first-child{padding-left:20px;color:var(--mid)}
+
+/* Filas de feature */
+.ptable tr.feat-row td{
+  padding:12px 14px;
+  font-size:13px;
+  color:var(--mid);
+  border-bottom:1px solid rgba(232,232,237,.7);
+  vertical-align:middle;
+}
+.ptable tr.feat-row td:first-child{padding-left:20px;color:var(--text);font-weight:500}
+.ptable tr.feat-row:last-child td{border-bottom:none}
+.ptable tr.feat-row td{text-align:center}
+.ptable tr.feat-row td:first-child{text-align:left}
+
+/* Columna del plan destacado */
+.ptable td.col-feat{background:rgba(0,87,255,.03)}
+.ptable thead th.th-feat{background:rgba(0,87,255,.04)}
+
+/* Iconos de tabla */
+.t-yes{color:var(--green);font-size:15px;font-weight:800;display:inline-block}
+.t-no{color:var(--light);font-size:17px;line-height:1;display:inline-block}
+.t-text{font-size:12px;color:var(--mid)}
+
+/* Footer de la sección pricing */
+.price-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:16px;
+  margin-top:32px;
+  padding:20px 24px;
+  background:var(--w);
+  border:1.5px solid var(--border);
+  border-radius:var(--r-lg);
+}
+.price-footer-tags{display:flex;flex-wrap:wrap;gap:18px}
+.pft{font-size:12px;color:var(--sub);display:flex;align-items:center;gap:6px}
+.pft::before{content:'✓';color:var(--green);font-weight:700;font-size:13px}
+.btn-wa-green{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:#25D366;
+  color:#fff;
+  padding:11px 22px;
+  border-radius:980px;
+  font-size:13.5px;
+  font-weight:700;
+  transition:all .22s cubic-bezier(.34,1.56,.64,1);
+  white-space:nowrap;
+  min-height:44px;
+  letter-spacing:-.01em;
+  flex-shrink:0;
+}
+.btn-wa-green:hover{background:#1DAA54;transform:translateY(-2px) scale(1.02);box-shadow:0 8px 24px rgba(37,211,102,.4)}
+.btn-wa-green:focus-visible{outline:2px solid #25D366;outline-offset:3px}
+
+/* ── Mobile: scroll horizontal en tabla ── */
+.ptable-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r-xl)}
+.ptable-scroll::-webkit-scrollbar{height:4px}
+.ptable-scroll::-webkit-scrollbar-track{background:var(--off)}
+.ptable-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.ptable-scroll .ptable{min-width:560px}
 
 /* ═══ ROI ═══ */
 .roi-card{background:var(--w);border-radius:var(--r-xl);padding:48px;max-width:740px;margin:0 auto;box-shadow:var(--shadow-lg);border:1px solid var(--border)}
@@ -583,6 +749,8 @@ footer{background:#111827;padding:52px 0 28px}
   .hero-inner{gap:36px}
   .nav-dropdown{width:460px}
   .nav-dropdown.sm{width:240px}
+  /* Pricing: 3 cols → 2 cols en tablet */
+  .pgrid .pcard:last-child{grid-column:span 2}
 }
 @media(max-width:768px){
   section{padding:68px 0}
@@ -604,6 +772,15 @@ footer{background:#111827;padding:52px 0 28px}
   .nav-cta .cta-short{display:inline}
   .nav-cta::after{animation:none}
   .nav-ham{display:flex}
+  /* Pricing mobile */
+  .pgrid .pcard:last-child{grid-column:auto}
+  .pcard.feat{margin-top:0}
+  .price-footer{flex-direction:column;align-items:flex-start;gap:20px}
+  .price-footer-tags{flex-direction:column;gap:10px}
+  .btn-wa-green{width:100%;justify-content:center}
+  .ptable-scroll .ptable{min-width:520px}
+  .ptable thead th,.ptable tr.feat-row td,.ptable tr.cat-row td{padding:10px 10px}
+  .ptable tr.feat-row td:first-child,.ptable tr.cat-row td:first-child,.ptable thead th:first-child{padding-left:14px}
 }
 </style>
 </head>
@@ -1061,64 +1238,297 @@ footer{background:#111827;padding:52px 0 28px}
 <!-- ═══ PRICING ═══ -->
 <section class="price-sec" id="precios">
   <div class="container">
+
+    <!-- Encabezado -->
     <div class="sec-hd reveal">
       <div class="eyebrow">Planes y precios</div>
       <h2 class="s-title">El plan correcto para<br>cada etapa de tu empresa.</h2>
-      <p class="s-desc">Sin contratos de exclusividad. Sin letra chica.</p>
+      <p class="s-desc">Tres caminos claros. Precio fijo. Sin sorpresas.</p>
     </div>
-    <div class="pgrid" style="grid-template-columns:repeat(3,1fr)">
+
+    <!-- ── Cards superiores (3 columnas) ── -->
+    <div class="pgrid">
+
+      <!-- Plan Explora -->
       <div class="pcard reveal d1">
-        <div class="pn">Entender primero</div>
+        <div class="pn">Diagnóstico primero</div>
         <div class="ptitle">Explora</div>
-        <div class="pamt">19 <span style="font-size:15px;font-weight:600">UF</span></div>
-        <div class="punit">Pago único · 1 semana</div>
-        <p class="pdesc">Entiende exactamente qué automatizar antes de gastar un peso más.</p>
+        <div class="price-block">
+          <div class="pamt">
+            19<span class="pamt-uf">UF</span><span class="pamt-ivá">+IVA</span>
+          </div>
+          <div class="punit">Pago único &middot; 1 semana</div>
+        </div>
+        <p class="pdesc">Entiende exactamente qué automatizar antes de invertir un peso. Con un plan técnico real en mano.</p>
         <ul class="pfeat">
           <li><span class="pck">✓</span>Sprint de discovery 5 días hábiles</li>
-          <li><span class="pck">✓</span>Mapa completo de tus procesos actuales</li>
+          <li><span class="pck">✓</span>Mapa completo de procesos actuales</li>
           <li><span class="pck">✓</span>3 flujos con mayor ROI identificados</li>
           <li><span class="pck">✓</span>Propuesta técnica con presupuesto real</li>
-          <li><span class="pck">✓</span>Sin compromiso de continuidad</li>
+          <li><span class="pck">✓</span>Sesión de presentación con tu equipo</li>
+          <li><span class="pck-no">—</span><span style="color:var(--light)">Implementación incluida</span></li>
+          <li><span class="pck-no">—</span><span style="color:var(--light)">Soporte post-entrega</span></li>
         </ul>
-        <a href="https://wa.me/56912345678" target="_blank" class="btn-plan bpo">Empezar con Explora →</a>
+        <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="btn-plan bpo">
+          Empezar con Explora &rarr;
+        </a>
       </div>
+
+      <!-- Plan Automatiza (destacado) -->
       <div class="pcard feat reveal d2">
-        <div class="feat-tag">⭐ MÁS ELEGIDO</div>
-        <div class="pn">Implementar</div>
+        <div class="feat-tag">MAS ELEGIDO</div>
+        <div class="pn">Implementación</div>
         <div class="ptitle">Automatiza</div>
-        <div class="pamt">Desde 50 <span style="font-size:15px;font-weight:600">UF</span></div>
-        <div class="punit">Por proyecto · Precio fijo por hito</div>
-        <p class="pdesc">Software funcionable. Código 100% tuyo. Resultados en semanas.</p>
+        <div class="price-block">
+          <div class="pamt">
+            <span style="font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--sub);margin-right:2px">Desde</span>50<span class="pamt-uf">UF</span><span class="pamt-ivá">+IVA</span>
+          </div>
+          <div class="punit">Por proyecto &middot; Precio fijo por hito</div>
+        </div>
+        <p class="pdesc">Software funcionable. Código 100% tuyo. Resultados medibles en semanas, no en meses.</p>
         <ul class="pfeat">
           <li><span class="pck">✓</span>Todo lo del plan Explora</li>
           <li><span class="pck">✓</span>Hasta 3 automatizaciones core</li>
+          <li><span class="pck">✓</span>Deploy en producción incluido</li>
           <li><span class="pck">✓</span>Hasta 5 integraciones activas</li>
           <li><span class="pck">✓</span>Motor de IA conectado a tus datos</li>
-          <li><span class="pck">✓</span>Panel de Control configurado</li>
-          <li><span class="pck">✓</span>3 meses de soporte incluido</li>
-          <li><span class="pck">✓</span>Código 100% tuyo al finalizar</li>
+          <li><span class="pck">✓</span>Capacitación del equipo</li>
+          <li><span class="pck">✓</span>3 meses de soporte + canal dedicado</li>
         </ul>
-        <a href="https://wa.me/56912345678" target="_blank" class="btn-plan bpw">Quiero implementar →</a>
+        <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="btn-plan bpf">
+          Quiero implementar &rarr;
+        </a>
       </div>
+
+      <!-- Plan Transforma -->
       <div class="pcard reveal d3">
         <div class="pn">Transformación total</div>
         <div class="ptitle">Transforma</div>
-        <div class="pamt">Desde 200 <span style="font-size:15px;font-weight:600">UF</span></div>
-        <div class="punit">Semestral / Anual · SLA garantizado</div>
-        <p class="pdesc">Automatización total de tu operación con soporte permanente.</p>
+        <div class="price-block">
+          <div class="pamt">
+            <span style="font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--sub);margin-right:2px">Desde</span>200<span class="pamt-uf">UF</span><span class="pamt-ivá">+IVA</span>
+          </div>
+          <div class="punit">Semestral &sol; Anual &middot; SLA garantizado</div>
+        </div>
+        <p class="pdesc">Automatización completa de tu operación. Soporte permanente, agentes de IA y monitoreo continuo.</p>
         <ul class="pfeat">
           <li><span class="pck">✓</span>Todo lo del plan Automatiza</li>
           <li><span class="pck">✓</span>Automatizaciones ilimitadas</li>
           <li><span class="pck">✓</span>34+ integraciones disponibles</li>
-          <li><span class="pck">✓</span>WhatsApp Business + E-commerce IA</li>
-          <li><span class="pck">✓</span>Facturación SII automatizada</li>
+          <li><span class="pck">✓</span>Agentes de IA con memoria persistente</li>
+          <li><span class="pck">✓</span>WhatsApp Business &middot; Facturación SII</li>
           <li><span class="pck">✓</span>Soporte 24/7 con SLA garantizado</li>
           <li><span class="pck">✓</span>Reuniones de revisión mensuales</li>
         </ul>
-        <a href="https://wa.me/56912345678" target="_blank" class="btn-plan bpo">Hablemos de tu proyecto →</a>
+        <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="btn-plan bpg">
+          Hablemos de tu proyecto &rarr;
+        </a>
       </div>
+    </div><!-- /pgrid -->
+
+    <!-- ── Tabla comparativa ── -->
+    <div class="ptable-scroll reveal" style="margin-top:32px">
+      <div class="ptable-wrap">
+        <table class="ptable" role="table" aria-label="Comparativa de planes SmartConnection">
+          <thead>
+            <tr>
+              <th scope="col" style="width:36%">Funcionalidad</th>
+              <th scope="col" style="width:21%">Explora</th>
+              <th scope="col" class="th-feat" style="width:21%">Automatiza</th>
+              <th scope="col" style="width:22%">Transforma</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- DIAGNÓSTICO -->
+            <tr class="cat-row"><td colspan="4">Diagnóstico</td></tr>
+            <tr class="feat-row">
+              <td>Sprint de discovery 5 días hábiles</td>
+              <td><span class="t-yes" aria-label="Incluido">✓</span></td>
+              <td class="col-feat"><span class="t-yes" aria-label="Incluido">✓</span></td>
+              <td><span class="t-yes" aria-label="Incluido">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Mapa completo de procesos actuales</td>
+              <td><span class="t-yes">✓</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>3 flujos con mayor ROI identificados</td>
+              <td><span class="t-yes">✓</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Propuesta técnica con presupuesto real</td>
+              <td><span class="t-yes">✓</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+
+            <!-- IMPLEMENTACIÓN -->
+            <tr class="cat-row"><td colspan="4">Implementación</td></tr>
+            <tr class="feat-row">
+              <td>Hasta 3 automatizaciones core</td>
+              <td><span class="t-no" aria-label="No incluido">&mdash;</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Software funcionable (no mockups)</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Código 100% tuyo &middot; acceso al repo</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Deploy en producción incluido</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Capacitación del equipo</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Automatizaciones ilimitadas</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>E-commerce inteligente</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Facturación SII automatizada</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+
+            <!-- INTEGRACIONES -->
+            <tr class="cat-row"><td colspan="4">Integraciones</td></tr>
+            <tr class="feat-row">
+              <td>Hasta 5 integraciones activas</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>34+ integraciones disponibles</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>WhatsApp Business integrado</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>API personalizada</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+
+            <!-- MOTOR DE IA -->
+            <tr class="cat-row"><td colspan="4">Motor de IA</td></tr>
+            <tr class="feat-row">
+              <td>Motor de IA conectado a tus datos</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Motor de IA con memoria persistente</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Agentes especializados por área</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Entrenamiento con tus datos</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+
+            <!-- SOPORTE -->
+            <tr class="cat-row"><td colspan="4">Soporte</td></tr>
+            <tr class="feat-row">
+              <td>Sesión de presentación con tu equipo</td>
+              <td><span class="t-yes">✓</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>3 meses de soporte incluido</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Canal de comunicación dedicado</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-yes">✓</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Soporte 24/7 con SLA garantizado</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Reuniones de revisión mensuales</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+            <tr class="feat-row">
+              <td>Monitoreo activo continuo</td>
+              <td><span class="t-no">&mdash;</span></td>
+              <td class="col-feat"><span class="t-no">&mdash;</span></td>
+              <td><span class="t-yes">✓</span></td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /ptable-scroll -->
+
+    <!-- ── Footer de sección ── -->
+    <div class="price-footer reveal">
+      <div class="price-footer-tags">
+        <span class="pft">Sin contratos de exclusividad</span>
+        <span class="pft">Sin letra chica</span>
+        <span class="pft">El código es tuyo desde el primer día</span>
+      </div>
+      <a href="https://wa.me/56912345678" target="_blank" rel="noopener" class="btn-wa-green">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Hablar con un especialista
+      </a>
     </div>
-    <p style="text-align:center;margin-top:28px;font-size:12px;color:var(--light)">Sin contratos de exclusividad · Sin letra chica · El código es tuyo desde el primer día</p>
+
   </div>
 </section>
 
